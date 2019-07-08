@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - mock</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-10-16-the-unit-test-and-mock-in-python.html">2017-10-16 The unit test and mock in python</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-16T18:48:19+08:00">
+                Published: Mon 16 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/unittest.html">unittest</a> <a href="/tag/mock.html">mock</a> <a href="/tag/dan-yuan-ce-shi.html">单元测试</a> <a href="/tag/dang-ban.html">挡板</a> <a href="/tag/ce-shi.html">测试]</a> </p>
+</footer><!-- /.post-info --><h3>mock 功效</h3>
+<!--more-->
+
+<h4>完成功能测试</h4>
+<div class="highlight"><pre><span></span><span class="c1"># module.py</span>
+
+<span class="k">class</span> <span class="nc">Count</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># test.py</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">module</span> <span class="kn">import</span> <span class="n">Count</span>
+
+<span class="k">class</span> <span class="nc">MockDemo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">Count</span><span class="p">()</span>
+        <span class="n">count</span><span class="o">.</span><span class="n">add</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>       
+        <span class="c1"># side_effect参数和return_value是相反的。它给mock分配了可替换的结果，覆盖了return_value。简单的说，一个模拟工厂调用将返回side_effect值，而不是return_value；所以，设置side_effect参数为Count类add()方法，那么return_value的作用失效。</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="c1"># 将会真正的调用add()方法，得到的返回值为16（8+8）。通过print打印结果。</span>
+        <span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="c1"># 检查mock方法是否获得了正确的参数。</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h4>解决测试依赖</h4>
+<blockquote>
+<p>例如，我们要测试A模块，然后A模块依赖于B模块的调用。但是，由于B模块的改变，导致了A模块返回结果的改变，从而使A模块的测试用例失败。其实，对于A模块，以及A模块的用例来说，并没有变化，不应该失败才对。这个时候就是mock发挥作用的时候了。通过mock模拟掉影响A模块的部分（B模块）。至于mock掉的部分（B模块）应该由其它用例来测试。</p>
+<p>add_and_multiply()函数依赖了multiply()函数的返回值</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># function.py</span>
+<span class="k">def</span> <span class="nf">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">addition</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="n">multiple</span> <span class="o">=</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+
+<span class="c1"># test.py</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">function</span>
+
+
+<span class="k">class</span> <span class="nc">MyTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add_and_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">addition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<blockquote>
+<p>修改multiply()函数的代码，这样测试会失败</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">3</span>
+</pre></div>
+
+
+<blockquote>
+<p>把 multiply()函数mock掉，解决依赖</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+<span class="kn">import</span> <span class="nn">function</span>
+
+<span class="k">class</span> <span class="nc">MyTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;function.multiply&quot;</span><span class="p">)</span>
+    <span class="c1"># patch()装饰/上下文管理器可以很容易地模拟类或对象在模块测试。在测试过程中，您指定的对象将被替换为一个模拟（或其他对象），并在测试结束时还原。这里模拟function.py文件中multiply()函数。</span>
+    <span class="k">def</span> <span class="nf">test_add_and_multiply2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_multiply</span><span class="p">):</span>
+        <span class="c1"># 在定义测试用例中，将mock的multiply()函数（对象）重命名为 mock_multiply对象。</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">mock_multiply</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="c1"># 设定mock_multiply对象的返回值为固定的15。</span>
+        <span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">mock_multiply</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="c1"># 检查mock_multiply方法的参数是否正确。</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">addition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>Mock attributes in Python mock?</h3>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;requests.post&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">patched_post</span><span class="p">:</span>
+    <span class="nb">type</span><span class="p">(</span><span class="n">patched_post</span><span class="o">.</span><span class="n">return_value</span><span class="p">)</span><span class="o">.</span><span class="n">ok</span> <span class="o">=</span> <span class="n">PropertyMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>Mock session in requests library？</h3>
+<div class="highlight"><pre><span></span><span class="c1"># main.py</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">do_session_get</span><span class="p">():</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span>
+
+<span class="c1"># tests.py</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+
+<span class="kn">from</span> <span class="nn">main</span> <span class="kn">import</span> <span class="n">do_session_get</span>
+
+<span class="c1"># The module of we mock, return the exact data that we expected</span>
+<span class="k">def</span> <span class="nf">mocked_requests</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># print args</span>
+    <span class="k">class</span> <span class="nc">MockResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span> <span class="o">=</span> <span class="n">json_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+
+        <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://someurl.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+<span class="c1"># from main import do_session_get</span>
+
+<span class="k">class</span> <span class="nc">TestDoSessionGet</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">&#39;requests.session&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_should_mock_session_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocked_session</span><span class="p">):</span>
+        <span class="n">mocked_session</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">get</span><span class="o">=</span><span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">side_effect</span><span class="o">=</span><span class="n">mocked_requests</span><span class="p">))</span>
+        <span class="c1"># print do_session_get()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">do_session_get</span><span class="p">(),</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>assert 常用断言速查</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assertEqual(a, b)</td>
+<td>a == b</td>
+</tr>
+<tr>
+<td>assertNotEqual(a, b)</td>
+<td>a != b</td>
+</tr>
+<tr>
+<td>assertGreater(a, b)</td>
+<td>a &gt; b</td>
+</tr>
+<tr>
+<td>assertGreaterEqual(a, b)</td>
+<td>a &gt;= b</td>
+</tr>
+<tr>
+<td>assertLess(a, b)</td>
+<td>a &lt; b</td>
+</tr>
+<tr>
+<td>assertLessEqual(a, b)</td>
+<td>a &lt;= b</td>
+</tr>
+<tr>
+<td>assertTrue(x)</td>
+<td>bool(x) is True</td>
+</tr>
+<tr>
+<td>assertFalse(x)</td>
+<td>bool(x) is False</td>
+</tr>
+<tr>
+<td>assertIs(a, b)</td>
+<td>a is b</td>
+</tr>
+<tr>
+<td>assertIsNot(a, b)</td>
+<td>a is not b</td>
+</tr>
+<tr>
+<td>assertIsNone(x)</td>
+<td>x is None</td>
+</tr>
+<tr>
+<td>assertIsNotNone(x)</td>
+<td>x is not None</td>
+</tr>
+<tr>
+<td>assertIn(a, b)</td>
+<td>a in b</td>
+</tr>
+<tr>
+<td>assertNotIn(a, b)</td>
+<td>a not in b</td>
+</tr>
+<tr>
+<td>assertIsInstance(a, b)</td>
+<td>isinstance(a, b)</td>
+</tr>
+<tr>
+<td>assertNotIsInstance(a, b)</td>
+<td>not isinstance(a, b)</td>
+</tr>
+</tbody>
+</table>
+<h3>干货：mock模板（requests）</h3>
+<div class="highlight"><pre><span></span><span class="c1"># common_test.py</span>
+
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">If the module is import from others files, like:</span>
+
+<span class="sd">from my.great.package import FlowType</span>
+
+<span class="sd">Then, we should do this, below:</span>
+
+<span class="sd"># Now we must patch &#39;my.great.package.requests.get&#39;</span>
+<span class="sd">@mock.patch(&#39;my.great.package.requests.get&#39;, side_effect=mocked_requests)</span>
+
+<span class="sd">instead of &quot;@mock.patch(&#39;common_test.requests.get&#39;, side_effect=mocked_requests)&quot;</span>
+<span class="sd">because the requests module was imported in that file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># The module that need unittest</span>
+<span class="k">class</span> <span class="nc">FlowType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">flow_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://chihweihsu.com/&#39;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resp</span>
+
+<span class="c1"># The data of we mock</span>
+<span class="n">mock_status_code</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">mock_text</span> <span class="o">=</span> <span class="s1">&#39;You are my sunshine!&#39;</span>
+<span class="n">mock_json</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;You are my sunshine!&#39;</span><span class="p">}</span>
+<span class="n">mock_content</span> <span class="o">=</span> <span class="s1">&#39;You are my sunshine!&#39;</span>
+
+<span class="c1"># The module of we mock, return the exact data that we expected</span>
+<span class="k">def</span> <span class="nf">mocked_requests</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">MockResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span> <span class="o">=</span> <span class="n">json_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+
+        <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://chihweihsu.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="n">mock_status_code</span><span class="p">,</span> <span class="n">mock_text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">mock_json</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">mock_content</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://someurl.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+
+<span class="c1"># The whole test case module</span>
+<span class="k">class</span> <span class="nc">TestCommon</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># We patch &#39;common_test.requests.get&#39; with our own method. The mock object is passed in to our test case method.</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">&#39;common_test.requests.get&#39;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">mocked_requests</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_flow_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocked_get</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">FlowType</span><span class="p">()</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flow_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">mock_status_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">mock_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">mock_content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">mock_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

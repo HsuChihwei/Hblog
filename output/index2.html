@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="9">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-31-python-two-sum-wen-ti.html" rel="bookmark"
+                           title="Permalink to 2017-8-31 python two sum 问题">2017-8-31 python  two sum 问题</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-31T17:02:59+08:00">
+                Published: Thu 31 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/suan-fa.html">算法]</a> </p>
+</footer><!-- /.post-info -->                <h3>题目描述：</h3>
+<blockquote>
+<p>来自<code>LeetCode</code></p>
+</blockquote>
+<div class="highlight"><pre><span></span># Time:  O(n)
+# Space: O(n)
+
+# Given an array of integers, return indices of the two numbers
+# such that they add up to a specific target.
+#
+# You may assume that each input would have exactly one solution.
+#
+# Example:
+# Given nums = [2, 7, 11, 15], target = 9,
+#
+# Because …</pre></div>
+                <a class="readmore" href="/2017-8-31-python-two-sum-wen-ti.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-28-python-interval-qu-jian-chu-li.html" rel="bookmark"
+                           title="Permalink to 2017-8-28 python interval 区间处理">2017-8-28 python interval  区间处理</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-28T18:25:08+08:00">
+                Published: Mon 28 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/qu-jian.html">区间</a> <a href="/tag/interval.html">interval]</a> </p>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">volume1</span> <span class="o">=</span> <span class="n">Interval</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;Foe&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">volume2</span> <span class="o">=</span> <span class="n">Interval</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s2">&quot;Fog&quot;</span><span class="p">,</span> <span class="s2">&quot;McAfee&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">volume3</span> <span class="o">=</span> <span class="n">Interval</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s2">&quot;McDonalds&quot;</span><span class="p">,</span> <span class="s2">&quot;Space&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">volume4</span> <span class="o">=</span> <span class="n">Interval</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="s2">&quot;Spade&quot;</span><span class="p">,</span> <span class="s2">&quot;Zygote&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">encyclopedia</span> <span class="o">=</span> <span class="n">IntervalSet</span><span class="p">([</span><span class="n">volume1</span><span class="p">,</span> <span class="n">volume2</span><span class="p">,</span> <span class="n">volume3</span><span class="p">,</span> <span class="n">volume4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mySet</span> <span class="o">=</span> <span class="n">IntervalSet</span><span class="p">([</span><span class="n">volume1</span><span class="p">,</span> <span class="n">volume3</span><span class="p">,</span> <span class="n">volume4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s2">&quot;Meteor&quot;</span> <span class="ow">in</span> <span class="n">encyclopedia</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s2">&quot;Goose&quot;</span> <span class="ow">in</span> <span class="n">encyclopedia</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s2">&quot;Goose&quot;</span> <span class="ow">in</span> <span class="n">mySet</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">volume2</span> <span class="ow">in</span> <span class="p">(</span><span class="n">encyclopedia</span> <span class="o">^</span> <span class="n">mySet</span><span class="p">)</span>
+<span class="bp">True</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span> <span class="mi">112 …</span></pre></div>
+                <a class="readmore" href="/2017-8-28-python-interval-qu-jian-chu-li.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-28-pandas-agg-shi-yong-lambda.html" rel="bookmark"
+                           title="Permalink to 2017-8-28 Pandas agg 使用lambda">2017-8-28 Pandas agg 使用lambda</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-28T18:12:25+08:00">
+                Published: Mon 28 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/lambda.html">lambda</a> <a href="/tag/agg.html">agg</a> <a href="/tag/pandas.html">Pandas]</a> </p>
+</footer><!-- /.post-info -->                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">),</span>
+    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">),</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">),</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">),</span>
+<span class="p">})</span>
+
+<span class="n">reading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">,)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;type …</span></pre></div>
+                <a class="readmore" href="/2017-8-28-pandas-agg-shi-yong-lambda.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-27-dataframeyu-xu-lie-xiang-cheng.html" rel="bookmark"
+                           title="Permalink to 2017-8-27 dataframe与序列相乘">2017-8-27 dataframe与序列相乘</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-27T18:28:54+08:00">
+                Published: Sun 27 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/pandas.html">Pandas</a> <a href="/tag/dataframe.html">DataFrame]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>继续完成项目中的评分卡部分，拿到分好箱的数据后，如何进行加权得到最后的分数就是我们接下来要考虑的问题了。</p>
+</blockquote>
+<!--more-->
+
+<h4>demo1:</h4>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>demo2:</h4>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tile_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+ <span class="n">dfn</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">T</span>
+ <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+ <span class="n">dfn</span> <span class="o">=</span> <span class="n">dfn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+ <span class="n">dfm</span> <span class="o">=</span> <span class="n">dfn</span><span class="o">.</span><span class="n">T</span>
+ <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+ <span class="n">dfm</span> <span class="o">=</span> <span class="n">dfm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfn</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+ <span class="k">return …</span></pre></div>
+                <a class="readmore" href="/2017-8-27-dataframeyu-xu-lie-xiang-cheng.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-27-python-xie-cheng-jia-su.html" rel="bookmark"
+                           title="Permalink to 2017-8-27 python 协程加速">2017-8-27 python 协程加速</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-27T16:05:58+08:00">
+                Published: Sun 27 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/gevent.html">gevent]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>上周，由于产品嫌报告生成太慢，经过使用<code>profile/gprof2dot</code>研究后，发现主要时间耗费在接口网络请求上，于是我决定在项目中大量处理I/O网络请求的地方使用<code>gevent</code>,以缓解报告生成压力。</p>
+</blockquote>
+<!--more-->
+
+<h3>实现代码：</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gevent</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">monkey</span><span class="p">,</span> <span class="n">pool</span>
+<span class="n">monkey</span><span class="o">.</span><span class="n">patch_socket</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">requests_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tel_tuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    主要处理requests请求</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Size of pool&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="err">……</span>
+    <span class="err">……</span>
+
+<span class="k">def</span> <span class="nf">generator_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tel_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    使用gevent实现协程处理I/O网络请求</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_parse</span><span class="p">,</span> <span class="n">tel</span><span class="p">)</span> <span class="k">for …</span></pre></div>
+                <a class="readmore" href="/2017-8-27-python-xie-cheng-jia-su.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-27-pandas-fen-xiang-cao-zuo-cut.html" rel="bookmark"
+                           title="Permalink to 2017-8-27 Pandas 分箱操作（cut）">2017-8-27 Pandas 分箱操作（cut）</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-27T11:12:47+08:00">
+                Published: Sun 27 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/pandas.html">Pandas</a> <a href="/tag/cut.html">cut</a> <a href="/tag/ping-fen-qia.html">评分卡]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>最新，项目中涉及到评分卡操作，评分项目有大概几十项，每项基本都是按频次区间给一个分数，最后，累计所有项目的分数得出最后所需要的分数。</p>
+</blockquote>
+<!--more-->
+
+<h3>demo1：</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)})</span>
+
+<span class="c1"># Bin the data frame by &quot;a&quot; with 10 bins...</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">a …</span></pre></div>
+                <a class="readmore" href="/2017-8-27-pandas-fen-xiang-cao-zuo-cut.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-23-mongo-insert_many-bulkwriteerror.html" rel="bookmark"
+                           title="Permalink to 2017-8-23 mongo insert_many BulkWriteError">2017-8-23 mongo insert_many BulkWriteError</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-23T09:31:08+08:00">
+                Published: Wed 23 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/mongo.html">mongo</a> <a href="/tag/bug.html">Bug]</a> </p>
+</footer><!-- /.post-info -->                <h3>问题：</h3>
+<blockquote>
+<p>在对mongo插入数据时，报写入问题，报错信息如下：</p>
+</blockquote>
+<div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;/root/crs/call_history_crawler/worker/communicate.py&quot;, line 149, in insert_db_data
+    if db[table].insert_many(data):
+  File &quot;/root/crs/call_history_crawler/venv/lib/python2.7/site-packages/pymongo/collection.py&quot;, line 684, in insert_many
+    blk.execute(self.write_concern.document)
+  File &quot;/root/crs/call_history_crawler …</pre></div>
+                <a class="readmore" href="/2017-8-23-mongo-insert_many-bulkwriteerror.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-14-jsonwen-jian-du-xie-ge-shi-hua.html" rel="bookmark"
+                           title="Permalink to 2017-8-14 JSON文件 读写 格式化">2017-8-14 JSON文件 读写 格式化</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-14T13:37:04+08:00">
+                Published: Mon 14 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/json.html">json]</a> </p>
+</footer><!-- /.post-info -->                <h3>写文件，格式化</h3>
+<blockquote>
+<p><code>indent</code>: 缩进（一般填4，缩进4格）；
+<code>sort_keys</code>: 是否排序（默认<code>False</code>--不排序）</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write_info</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">file_info</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;{}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_name</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">file_info</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">write_info</span><span class="p">(</span><span class="s1">&#39;report&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">report_data</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+</pre></div>
+
+
+<!--more-->
+
+<h3>读文件，格式化</h3>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pp_json</span><span class="p">(</span><span class="n">json_thing</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indents</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">json_thing</span><span class="p">)</span> <span class="ow">is …</span></pre></div>
+                <a class="readmore" href="/2017-8-14-jsonwen-jian-du-xie-ge-shi-hua.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-13-san-yuan-biao-da-shi-tiao-jian-biao-da-shi.html" rel="bookmark"
+                           title="Permalink to 2017-8-13 三元表达式（条件表达式）">2017-8-13 三元表达式（条件表达式）</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-13T10:41:33+08:00">
+                Published: Sun 13 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/tiao-jian-biao-da-shi.html">条件表达式]</a> </p>
+</footer><!-- /.post-info -->                <h3>条件表达式：</h3>
+<blockquote>
+<p>使用一行代码快速判断，替换复杂的多行if语句，使得代码简单可维护。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># 如果条件为真，返回真，否则返回假</span>
+<span class="n">condition_is_true</span> <span class="k">if</span> <span class="n">condition</span> <span class="k">else</span> <span class="n">condition_is_false</span>
+
+<span class="n">is_fat</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;fat&quot;</span> <span class="k">if</span> <span class="n">is_fat</span> <span class="k">else</span> <span class="s2">&quot;not fat&quot;</span>
+</pre></div>
+
+
+<!--more-->
+
+<h3>元组条件表达式：</h3>
+<div class="highlight"><pre><span></span><span class="c1"># (返回假，返回真)[真或假]</span>
+<span class="p">(</span><span class="n">if_test_is_false</span><span class="p">,</span> <span class="n">if_test_is_true</span><span class="p">)[</span><span class="n">test</span><span class="p">]</span>
+
+<span class="n">fat</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">fitness</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;skinny&quot;</span><span class="p">,</span> <span class="s2">&quot;fat&quot;</span><span class="p">)[</span><span class="n">fat</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;All is &#39;</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+<span class="c1"># 输出： All is fat</span>
+</pre></div>
+
+
+<blockquote>
+<p>注意：
+ - 原理：python中，True == 1，False == 0，相当于元组中使用0和1来选取数据 …</p></blockquote>
+                <a class="readmore" href="/2017-8-13-san-yuan-biao-da-shi-tiao-jian-biao-da-shi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-10-diao-shi-pdbpython-debugger.html" rel="bookmark"
+                           title="Permalink to 2017-8-10 调试 Pdb（Python debugger）">2017-8-10 调试 Pdb（Python debugger）</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-10T22:20:47+08:00">
+                Published: Thu 10 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/debugger.html">Debugger]</a> </p>
+</footer><!-- /.post-info -->                <h2>Pdb（Python debugger）：</h2>
+<h3>命令行运行：</h3>
+<div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pdb</span> <span class="n">my_script</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+
+
+<!--more-->
+
+<h3>脚本内部运行：</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pdb</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>常用命令：</h3>
+<div class="highlight"><pre><span></span><span class="n">c</span> <span class="err">：继续执行；</span>
+<span class="n">w</span><span class="err">：显示上下文；</span>
+<span class="n">a</span><span class="err">：打印当前函数参数列表；</span>
+<span class="n">s</span><span class="err">：单步进入，进入函数内部（</span><span class="n">step</span><span class="err">）；</span>
+<span class="n">n</span><span class="err">：单步跳过，不进入函数（</span><span class="nb">next</span><span class="err">）；</span>
+<span class="n">q</span><span class="err">：退出</span><span class="n">Pdb</span>
+</pre></div>
+                <a class="readmore" href="/2017-8-10-diao-shi-pdbpython-debugger.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index.html">&laquo;</a>
+    Page 2 / 4
+        <a href="/index3.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

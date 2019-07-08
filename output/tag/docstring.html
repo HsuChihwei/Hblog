@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - Docstring]</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-8-31-zi-dong-sheng-cheng-zhu-shi-wen-dang-docstring.html">2017-8-31 自动 生成注释文档（docstring）</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-08-31T20:22:52+08:00">
+                Published: Thu 31 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/linux.html">Linux</a> <a href="/tag/docstring.html">Docstring]</a> </p>
+</footer><!-- /.post-info --><h3>情景描述：</h3>
+<blockquote>
+<p>项目中，发现很多函数、类没有注释说明，一个个弄比较繁琐，所以……</p>
+</blockquote>
+<!--more-->
+
+<h3><code>docstring</code>定义：</h3>
+<blockquote>
+<p>官方：A docstring is a string literal that occurs as the first statement in a module, function, class, or method definition. Such a docstring becomes the <strong>doc</strong> special attribute of that object；
+人话：“出现在模块、函数、类、方法里的第一个语句，就叫做<code>docsting</code>”；
+调用：使用<code>__doc__</code>。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+  <span class="sd">&quot;&quot;&quot; This is function foo&quot;&quot;&quot;</span>
+
+<span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="c1">#  This is function foo</span>
+</pre></div>
+
+
+<h3><code>docstring</code>风格：</h3>
+<blockquote>
+<p>主要四种：<code>javadoc</code>(<code>Epytext</code>), <code>reST</code>, <code>numpydoc</code>, <code>google</code></p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># Epytext</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is a javadoc style.</span>
+
+<span class="sd">@param param1: this is a first param</span>
+<span class="sd">@param param2: this is a second param</span>
+<span class="sd">@return: this is a description of what is returned</span>
+<span class="sd">@raise keyError: raises an exception</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># reST（推荐，reST风格，Sphinx的御用格式）</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is a reST style.</span>
+
+<span class="sd">:param param1: this is a first param</span>
+<span class="sd">:param param2: this is a second param</span>
+<span class="sd">:returns: this is a description of what is returned</span>
+<span class="sd">:raises keyError: raises an exception</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Google</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is a groups style docs.</span>
+
+<span class="sd">Parameters:</span>
+<span class="sd">  param1 - this is the first param</span>
+<span class="sd">  param2 - this is a second param</span>
+
+<span class="sd">Returns:</span>
+<span class="sd">  This is a description of what is returned</span>
+
+<span class="sd">Raises:</span>
+<span class="sd">  KeyError - raises an exception</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Numpydoc (Numpy风格)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">My numpydoc description of a kind</span>
+<span class="sd">of very exhautive numpydoc format docstring.</span>
+
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">first : array_like</span>
+<span class="sd">  the 1st param name `first`</span>
+<span class="sd">second :</span>
+<span class="sd">  the 2nd param</span>
+<span class="sd">third : {&#39;value&#39;, &#39;other&#39;}, optional</span>
+<span class="sd">  the 3rd param, by default &#39;value&#39;</span>
+
+<span class="sd">Returns</span>
+<span class="sd">-------</span>
+<span class="sd">string</span>
+<span class="sd">  a value in a string</span>
+
+<span class="sd">Raises</span>
+<span class="sd">------</span>
+<span class="sd">KeyError</span>
+<span class="sd">  when a key error</span>
+<span class="sd">OtherError</span>
+<span class="sd">  when an other error</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h3>转换工具<a href="https://github.com/dadadel/pyment"><code>pyment</code></a></h3>
+<blockquote>
+<p>用来创建、转换<code>docsting</code>，<a href="https://github.com/dadadel/pyment">点击查看安装</a>
+centos中可能使用不了<code>patch</code>，<a href="http://centos-packages.com/7/package/patch/">点击下载安装包</a>
+<code>pyment</code>命令帮助：<code>pyment -h</code></p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># 安装pyment</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dadadel</span><span class="o">/</span><span class="n">pyment</span><span class="o">.</span><span class="n">git</span>  <span class="c1"># or git@github.com:dadadel/pyment.git</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="n">pyment</span>
+<span class="err">$</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+
+<span class="c1"># 安装patch</span>
+<span class="c1"># 下载安装包：http://centos-packages.com/7/package/patch/</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">i</span> <span class="n">patch</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="mf">8.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+
+<span class="c1"># 使用方法</span>
+<span class="err">$</span> <span class="n">pyment</span> <span class="n">test</span><span class="o">.</span><span class="n">py</span>      <span class="c1">#生成patch</span>
+<span class="err">$</span> <span class="n">patch</span> <span class="o">-</span><span class="n">p1</span> <span class="o">&lt;</span> <span class="n">test</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">patch</span> <span class="c1">#打patch</span>
+</pre></div>
+
+
+<h3>例子：</h3>
+<blockquote>
+<p>注释前</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># test.py</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="s1">&#39;default val&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Description of func with docstring groups style.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        param1 - descr of param1 that has True for default value.</span>
+<span class="sd">        param2 - descr of param2</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        some value</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        keyError: raises key exception</span>
+<span class="sd">        TypeError: raises type exception</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<blockquote>
+<p>执行<code>pyment test.py</code>，得到<code>patch</code>文件</p>
+</blockquote>
+<div class="highlight"><pre><span></span># Patch generated by Pyment v0.2.0
+
+--- a/test.py
++++ b/test.py
+@@ -1,20 +1,22 @@
+ def func(param1=True, param2=&#39;default val&#39;):
+-    &#39;&#39;&#39;Description of func with docstring groups style.
++    &quot;&quot;&quot;Description of func with docstring groups style.
+
+-    Params:
+-        param1 - descr of param1 that has True for default value.
+-        param2 - descr of param2
++    :param param1: descr of param1 that has True for default value
++    :param param2: descr of param2 (Default value = &#39;default val&#39;)
++    :returns: some value
++    :raises keyError: raises key exception
++    :raises TypeError: raises type exception
+
+-    Returns:
+-        some value
+-
+-    Raises:
+-        keyError: raises key exception
+-        TypeError: raises type exception
+-
+-    &#39;&#39;&#39;
++    &quot;&quot;&quot;
+     pass
+
+ class A:
++    &quot;&quot;&quot; &quot;&quot;&quot;
+     def method(self, param1, param2=None):
++        &quot;&quot;&quot;
++
++        :param param1:
++        :param param2:  (Default value = None)
++
++        &quot;&quot;&quot;
+         pass
+</pre></div>
+
+
+<blockquote>
+<p>执行<code>patch -p1 &lt; test.py.patch</code>，注释后得到</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="s1">&#39;default val&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Description of func with docstring groups style.</span>
+
+<span class="sd">    :param param1: descr of param1 that has True for default value</span>
+<span class="sd">    :param param2: descr of param2 (Default value = &#39;default val&#39;)</span>
+<span class="sd">    :returns: some value</span>
+<span class="sd">    :raises keyError: raises key exception</span>
+<span class="sd">    :raises TypeError: raises type exception</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param param1:</span>
+<span class="sd">        :param param2:  (Default value = None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<h3>后续</h3>
+<blockquote>
+<p>使用<code>sphinx</code>的<code>autodoc</code>自动从<code>docstring</code>生产api文档, 避免重复工作，再娄一遍Api文档。</p>
+</blockquote>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

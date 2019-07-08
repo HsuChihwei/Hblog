@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - cut</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-8-27-pandas-fen-xiang-cao-zuo-cut.html">2017-8-27 Pandas 分箱操作（cut）</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-08-27T11:12:47+08:00">
+                Published: Sun 27 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/pandas.html">Pandas</a> <a href="/tag/cut.html">cut</a> <a href="/tag/ping-fen-qia.html">评分卡]</a> </p>
+</footer><!-- /.post-info --><h3>情景描述：</h3>
+<blockquote>
+<p>最新，项目中涉及到评分卡操作，评分项目有大概几十项，每项基本都是按频次区间给一个分数，最后，累计所有项目的分数得出最后所需要的分数。</p>
+</blockquote>
+<!--more-->
+
+<h3>demo1：</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)})</span>
+
+<span class="c1"># Bin the data frame by &quot;a&quot; with 10 bins...</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="c1"># array([ 0.00282977,  0.11097259,  0.2191154 ,  0.32725822,  0.43540104,</span>
+        <span class="mf">0.54354385</span><span class="p">,</span>  <span class="mf">0.65168667</span><span class="p">,</span>  <span class="mf">0.75982948</span><span class="p">,</span>  <span class="mf">0.8679723</span> <span class="p">,</span>  <span class="mf">0.97611511</span><span class="p">])</span>
+
+<span class="c1"># bins = np.linspace(0, 1, 11) # 优化版</span>
+<span class="c1"># array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9,  1. ])</span>
+
+<span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">bins</span><span class="p">))</span>
+
+<span class="c1"># Get the mean of each bin:</span>
+<span class="k">print</span> <span class="n">groups</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># Also could do &quot;groups.aggregate(np.mean)&quot;</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">output</span><span class="p">:</span>
+           <span class="n">a</span>         <span class="n">b</span>         <span class="nb">id</span>
+<span class="mi">1</span>   <span class="mf">0.044003</span>  <span class="mf">0.525964</span>  <span class="mf">56.307692</span>
+<span class="mi">2</span>   <span class="mf">0.167568</span>  <span class="mf">0.506078</span>  <span class="mf">55.454545</span>
+<span class="mi">3</span>   <span class="mf">0.268109</span>  <span class="mf">0.510612</span>  <span class="mf">44.636364</span>
+<span class="mi">4</span>   <span class="mf">0.375014</span>  <span class="mf">0.544154</span>  <span class="mf">69.833333</span>
+<span class="mi">5</span>   <span class="mf">0.481702</span>  <span class="mf">0.590031</span>  <span class="mf">48.500000</span>
+<span class="mi">6</span>   <span class="mf">0.599587</span>  <span class="mf">0.488921</span>  <span class="mf">38.076923</span>
+<span class="mi">7</span>   <span class="mf">0.696548</span>  <span class="mf">0.643555</span>  <span class="mf">50.642857</span>
+<span class="mi">8</span>   <span class="mf">0.830064</span>  <span class="mf">0.620650</span>  <span class="mf">50.571429</span>
+<span class="mi">9</span>   <span class="mf">0.928396</span>  <span class="mf">0.545460</span>  <span class="mf">44.166667</span>
+<span class="mi">10</span>  <span class="mf">0.976115</span>  <span class="mf">0.693051</span>  <span class="mf">28.000000</span>
+
+<span class="c1"># Similarly, the median:</span>
+<span class="k">print</span> <span class="n">groups</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">output</span><span class="p">:</span>
+          <span class="n">a</span>         <span class="n">b</span>    <span class="nb">id</span>
+<span class="mi">1</span>   <span class="mf">0.028901</span>  <span class="mf">0.536857</span>  <span class="mf">61.0</span>
+<span class="mi">2</span>   <span class="mf">0.167054</span>  <span class="mf">0.557716</span>  <span class="mf">49.0</span>
+<span class="mi">3</span>   <span class="mf">0.267337</span>  <span class="mf">0.534911</span>  <span class="mf">43.0</span>
+<span class="mi">4</span>   <span class="mf">0.374787</span>  <span class="mf">0.487063</span>  <span class="mf">73.0</span>
+<span class="mi">5</span>   <span class="mf">0.480395</span>  <span class="mf">0.737007</span>  <span class="mf">49.5</span>
+<span class="mi">6</span>   <span class="mf">0.603701</span>  <span class="mf">0.676479</span>  <span class="mf">42.0</span>
+<span class="mi">7</span>   <span class="mf">0.695939</span>  <span class="mf">0.689144</span>  <span class="mf">57.5</span>
+<span class="mi">8</span>   <span class="mf">0.836665</span>  <span class="mf">0.690757</span>  <span class="mf">41.0</span>
+<span class="mi">9</span>   <span class="mf">0.924245</span>  <span class="mf">0.646487</span>  <span class="mf">47.0</span>
+<span class="mi">10</span>  <span class="mf">0.976115</span>  <span class="mf">0.693051</span>  <span class="mf">28.0</span>
+
+<span class="c1"># Apply some arbitrary function to aggregate binned data</span>
+<span class="k">print</span> <span class="n">groups</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]))</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">output</span><span class="p">:</span>
+           <span class="n">a</span>         <span class="n">b</span>         <span class="nb">id</span>
+<span class="mi">1</span>        <span class="n">NaN</span>  <span class="mf">0.671236</span>  <span class="mf">56.307692</span>
+<span class="mi">2</span>        <span class="n">NaN</span>  <span class="mf">0.704379</span>  <span class="mf">55.454545</span>
+<span class="mi">3</span>        <span class="n">NaN</span>  <span class="mf">0.768609</span>  <span class="mf">44.636364</span>
+<span class="mi">4</span>        <span class="n">NaN</span>  <span class="mf">0.804354</span>  <span class="mf">69.833333</span>
+<span class="mi">5</span>   <span class="mf">0.514166</span>  <span class="mf">0.796151</span>  <span class="mf">48.500000</span>
+<span class="mi">6</span>   <span class="mf">0.599587</span>  <span class="mf">0.755381</span>  <span class="mf">41.250000</span>
+<span class="mi">7</span>   <span class="mf">0.696548</span>  <span class="mf">0.779524</span>  <span class="mf">50.642857</span>
+<span class="mi">8</span>   <span class="mf">0.830064</span>  <span class="mf">0.766095</span>  <span class="mf">50.571429</span>
+<span class="mi">9</span>   <span class="mf">0.928396</span>  <span class="mf">0.902529</span>  <span class="mf">44.166667</span>
+<span class="mi">10</span>  <span class="mf">0.976115</span>  <span class="mf">0.693051</span>  <span class="mf">28.000000</span>
+</pre></div>
+
+
+<h4>demo2 :</h4>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> 
+                       <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="p">})</span>
+
+<span class="c1"># Bin the data frame by &quot;a&quot; with 10 bins...</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">bins</span><span class="p">))</span>
+
+<span class="c1"># Get the mean of b, binned by the values in a</span>
+<span class="k">print</span> <span class="n">groups</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">b</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">output</span><span class="p">:</span>
+<span class="n">a</span>
+<span class="p">(</span><span class="mf">0.000351</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">]</span>    <span class="mf">10.596542</span>
+<span class="p">(</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">]</span>        <span class="mf">10.690010</span>
+<span class="p">(</span><span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">]</span>        <span class="mf">10.250080</span>
+<span class="p">(</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">]</span>        <span class="mf">10.546134</span>
+<span class="p">(</span><span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.549</span><span class="p">]</span>       <span class="mf">10.471454</span>
+<span class="p">(</span><span class="mf">0.549</span><span class="p">,</span> <span class="mf">0.659</span><span class="p">]</span>      <span class="mf">10.455624</span>
+<span class="p">(</span><span class="mf">0.659</span><span class="p">,</span> <span class="mf">0.769</span><span class="p">]</span>      <span class="mf">10.501616</span>
+<span class="p">(</span><span class="mf">0.769</span><span class="p">,</span> <span class="mf">0.879</span><span class="p">]</span>      <span class="mf">10.588354</span>
+<span class="p">(</span><span class="mf">0.879</span><span class="p">,</span> <span class="mf">0.989</span><span class="p">]</span>      <span class="mf">10.461848</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+
+
+<h4>demo3:</h4>
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">144</span><span class="p">]:</span> <span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span>   <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)})</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">145</span><span class="p">]:</span> <span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">.</span><span class="mi">25</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">75</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">146</span><span class="p">]:</span> <span class="n">a_bins</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">a</span><span class="p">,</span><span class="n">bins</span><span class="p">))</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">147</span><span class="p">]:</span> <span class="n">b_bins</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">b</span><span class="p">,</span><span class="n">bins</span><span class="p">))</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">148</span><span class="p">]:</span> <span class="n">a_bins</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">mean</span><span class="p">,</span><span class="n">median</span><span class="p">])</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">148</span><span class="p">]:</span>
+                 <span class="n">mean</span>    <span class="n">median</span>
+<span class="n">a</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>    <span class="mf">0.124173</span>  <span class="mf">0.114613</span>
+<span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="mf">0.367703</span>  <span class="mf">0.358866</span>
+<span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">]</span>  <span class="mf">0.624251</span>  <span class="mf">0.626730</span>
+<span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>    <span class="mf">0.875395</span>  <span class="mf">0.869843</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">149</span><span class="p">]:</span> <span class="n">b_bins</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">mean</span><span class="p">,</span><span class="n">median</span><span class="p">])</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">149</span><span class="p">]:</span>
+                 <span class="n">mean</span>    <span class="n">median</span>
+<span class="n">b</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>    <span class="mf">0.147936</span>  <span class="mf">0.166900</span>
+<span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="mf">0.394918</span>  <span class="mf">0.386729</span>
+<span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">]</span>  <span class="mf">0.636111</span>  <span class="mf">0.655247</span>
+<span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>    <span class="mf">0.851227</span>  <span class="mf">0.838805</span>
+</pre></div>
+
+
+<h4>demo4:</h4>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">168</span><span class="p">]:</span> <span class="n">filter_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">33</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">169</span><span class="p">]:</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">columns</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;filtercol&#39;</span><span class="p">])</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">170</span><span class="p">]:</span> <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">filtercol</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">filter_values</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">171</span><span class="p">]:</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">171</span><span class="p">]:</span>
+<span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">33</span><span class="p">]</span>    <span class="mi">16</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>     <span class="mi">11</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>       <span class="mi">5</span>
+
+<span class="c1"># 排序</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">172</span><span class="p">]:</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">173</span><span class="p">]:</span> <span class="n">counts</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">173</span><span class="p">]:</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>       <span class="mi">5</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>     <span class="mi">11</span>
+<span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">33</span><span class="p">]</span>    <span class="mi">16</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">filtercol</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+
+<span class="c1"># 重置索引(reset index)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># counts 不变</span>
+<span class="n">counts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># 直接改变counts</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">174</span><span class="p">]:</span> <span class="n">out</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">175</span><span class="p">]:</span> <span class="n">out</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">175</span><span class="p">]:</span>
+<span class="mi">0</span>     <span class="mi">5</span>
+<span class="mi">1</span>    <span class="mi">11</span>
+<span class="mi">2</span>    <span class="mi">16</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">filtercol</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">176</span><span class="p">]:</span> <span class="n">counts</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">176</span><span class="p">]:</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>       <span class="mi">5</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>     <span class="mi">11</span>
+<span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">33</span><span class="p">]</span>    <span class="mi">16</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">filtercol</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">177</span><span class="p">]:</span> <span class="n">counts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">178</span><span class="p">]:</span> <span class="n">counts</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">178</span><span class="p">]:</span>
+<span class="mi">0</span>     <span class="mi">5</span>
+<span class="mi">1</span>    <span class="mi">11</span>
+<span class="mi">2</span>    <span class="mi">16</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">filtercol</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+
+
+<h4>总结：</h4>
+<blockquote>
+<p>第四个demo基本就可以完成当前目标了；
+后续需要操作的是封装一个合适的通用方法，将每个项目评分标准代入即可。</p>
+</blockquote>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

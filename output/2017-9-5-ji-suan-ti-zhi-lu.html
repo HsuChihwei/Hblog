@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>2017-9-5 计算体脂率</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017-9-5-ji-suan-ti-zhi-lu.html" rel="bookmark"
+           title="Permalink to 2017-9-5 计算体脂率">2017-9-5 计算体脂率</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-05T17:12:11+08:00">
+                Published: Tue 05 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/life.html">life]</a> </p>
+</footer><!-- /.post-info -->      <h3>情景描述：</h3>
+<blockquote>
+<p>用来计算一个人的体脂率</p>
+</blockquote>
+<!--more-->
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_BFR</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;计算BMI及体脂率</span>
+<span class="sd">    :param weight: 体重（kg）</span>
+<span class="sd">    :param height: 身高（m）</span>
+<span class="sd">    :param age: 年龄（岁）</span>
+<span class="sd">    :param gender: 性别（男--1，女--0）</span>
+<span class="sd">    :returns: 体脂率，float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># BMI</span>
+    <span class="n">BMI</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">/</span><span class="p">(</span><span class="n">height</span><span class="o">*</span><span class="n">height</span><span class="p">)</span>
+    <span class="c1"># 体脂率 </span>
+    <span class="n">BFR</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">BMI</span> <span class="o">+</span> <span class="mf">0.23</span><span class="o">*</span><span class="n">age</span> <span class="o">-</span> <span class="mf">5.4</span> <span class="o">-</span> <span class="mf">10.8</span><span class="o">*</span><span class="n">gender</span>
+    <span class="k">return</span> <span class="n">BFR</span>
+
+<span class="n">get_BFR</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># 12.61737024221453</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

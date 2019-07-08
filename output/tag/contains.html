@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - Contains]</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-8-7-pandas-huo-qu-bu-fu-he-tiao-jian-de-dataframe.html">2017-8-7 pandas 获取不符合条件的dataframe</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-08-07T00:00:00+08:00">
+                Published: Mon 07 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/pandas.html">Pandas</a> <a href="/tag/contains.html">Contains]</a> </p>
+</footer><!-- /.post-info --><h2>search for “does-not-contain” on a dataframe in pandas</h2>
+<blockquote>
+<p>问题来源：做项目时，想拿到不符合条件的所有数据，比如：通话类型有好多种（主叫、被叫、呼转……），现在想分析所有非主叫数据，那么问题就来了。</p>
+</blockquote>
+<!--more-->
+
+<h3>方法一：df[~df.col.str.contains(word)]</h3>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">]})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Hello|World&quot;</span><span class="p">)</span>
+<span class="mi">0</span>     <span class="bp">True</span>
+<span class="mi">1</span>    <span class="bp">False</span>
+<span class="mi">2</span>     <span class="bp">True</span>
+<span class="mi">3</span>    <span class="bp">False</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Hello|World&quot;</span><span class="p">)</span>
+<span class="mi">0</span>    <span class="bp">False</span>
+<span class="mi">1</span>     <span class="bp">True</span>
+<span class="mi">2</span>    <span class="bp">False</span>
+<span class="mi">3</span>     <span class="bp">True</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Hello|World&quot;</span><span class="p">)]</span>
+       <span class="n">A</span>
+<span class="mi">1</span>   <span class="n">this</span>
+<span class="mi">3</span>  <span class="n">apple</span>
+
+<span class="p">[</span><span class="mi">2</span> <span class="n">rows</span> <span class="n">x</span> <span class="mi">1</span> <span class="n">columns</span><span class="p">]</span>
+</pre></div>
+
+
+<blockquote>
+<p>注意：
+- 似乎 <code>df[~(df.A.str.contains("Hello") | (df.A.str.contains("World")))]</code>比上面使用正则，速度会快点
+- 获取“非”数据的条数：<code>(~df.col3.str.contains('u|z')).sum()</code></p>
+</blockquote>
+<h3>方法二：</h3>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;col&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;this&#39;</span><span class="o">|</span><span class="s1">&#39;that&#39;</span><span class="p">)</span><span class="o">==</span><span class="bp">False</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">]})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Hello|World&quot;</span><span class="p">)</span><span class="o">==</span><span class="bp">False</span><span class="p">]</span>
+       <span class="n">A</span>
+<span class="mi">1</span>   <span class="n">this</span>
+<span class="mi">3</span>  <span class="n">apple</span>
+
+<span class="c1"># 多个条件情况下：</span>
+<span class="c1"># df[df[&quot;col1&quot;].str.contains(&#39;this|that&#39;)==False and df[&quot;col2&quot;].str.contains(&#39;foo|bar&#39;)==True]</span>
+</pre></div>
+
+
+<h3>方法三：</h3>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">]})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?:(?!Hello|World).)*$&#39;</span><span class="p">)</span>
+<span class="mi">0</span>    <span class="bp">False</span>
+<span class="mi">1</span>     <span class="bp">True</span>
+<span class="mi">2</span>    <span class="bp">False</span>
+<span class="mi">3</span>     <span class="bp">True</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?:(?!Hello|World).)*$&#39;</span><span class="p">)]</span>
+       <span class="n">A</span>
+<span class="mi">1</span>   <span class="n">this</span>
+<span class="mi">3</span>  <span class="n">apple</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

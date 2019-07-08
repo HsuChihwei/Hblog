@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>2017-5-16 从字典中提取子集</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017-5-16-cong-zi-dian-zhong-ti-qu-zi-ji.html" rel="bookmark"
+           title="Permalink to 2017-5-16 从字典中提取子集">2017-5-16 从字典中提取子集</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-16T23:01:03+08:00">
+                Published: Tue 16 May 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/zi-dian-tui-dao-shi.html">字典推导式]</a> </p>
+</footer><!-- /.post-info -->      <h2>需求</h2>
+<p>给你一个条件，从已给字典中构造一个符合条件的新字典，为原字典的子集。</p>
+<h2>解决方案</h2>
+<p>使用字典推导式：</p>
+<div class="highlight"><pre><span></span><span class="nv">prices</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s1">&#39;ACME&#39;</span>: <span class="m">45</span>.23,
+    <span class="s1">&#39;AAPL&#39;</span>: <span class="m">612</span>.78,
+    <span class="s1">&#39;IBM&#39;</span>: <span class="m">205</span>.55,
+    <span class="s1">&#39;HPQ&#39;</span>: <span class="m">37</span>.20,
+    <span class="s1">&#39;FB&#39;</span>: <span class="m">10</span>.75
+<span class="o">}</span>
+<span class="c1"># Make a dictionary of all prices over 200</span>
+<span class="nv">p1</span> <span class="o">=</span> <span class="o">{</span>key: value <span class="k">for</span> key, value in prices.items<span class="o">()</span> <span class="k">if</span> value &gt; <span class="m">200</span><span class="o">}</span>
+<span class="c1"># Make a dictionary of tech stocks</span>
+<span class="nv">tech_names</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;AAPL&#39;</span>, <span class="s1">&#39;IBM&#39;</span>, <span class="s1">&#39;HPQ&#39;</span>, <span class="s1">&#39;MSFT&#39;</span><span class="o">}</span>
+<span class="nv">p2</span> <span class="o">=</span> <span class="o">{</span>key: value <span class="k">for</span> key, value in prices.items<span class="o">()</span> <span class="k">if</span> key in tech_names<span class="o">}</span>
+</pre></div>
+
+
+<!--more-->
+
+<h2>案例</h2>
+<div class="highlight"><pre><span></span><span class="c1"># 需求：输出phone_bill中每月不为&#39;0.00&#39;的项目</span>
+<span class="s2">&quot;phone_bill&quot;</span> : <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_zengzhifei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_qita&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.20&quot;</span>,
+            <span class="s2">&quot;bill_daishoufei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;0.00&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_zengzhifei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_qita&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.60&quot;</span>,
+            <span class="s2">&quot;bill_daishoufei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;15.62&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;4.18&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_zengzhifei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_qita&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;56.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.30&quot;</span>,
+            <span class="s2">&quot;bill_daishoufei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;9.36&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;7.03&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_zengzhifei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_qita&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.30&quot;</span>,
+            <span class="s2">&quot;bill_daishoufei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;0.00&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_zengzhifei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_qita&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;10.58&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_daishoufei&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;0.00&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;0.00&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+
+<span class="c1"># 处理逻辑</span>
+<span class="k">for</span> cursor in xrange<span class="o">(</span><span class="m">0</span>,5<span class="o">)</span>:
+     <span class="nv">phone_bill_tmp</span> <span class="o">=</span> <span class="o">{</span>key: value<span class="o">[</span>:-1<span class="o">]</span> <span class="k">for</span> key, value in phone_bill<span class="o">[</span>cursor<span class="o">]</span>.items<span class="o">()</span> <span class="k">if</span> value not in <span class="o">[</span><span class="s1">&#39;&#39;</span>,<span class="s1">&#39;0.00&#39;</span><span class="o">]}</span>
+     phone_bill.append<span class="o">(</span>phone_bill_tmp<span class="o">)</span>
+
+<span class="c1"># 结果</span>
+<span class="s2">&quot;phone_bill&quot;</span> : <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.0&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.2&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.0&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.6&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;15.6&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;4.1&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;56.0&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.3&quot;</span>,
+            <span class="s2">&quot;bill_ext_data&quot;</span> : <span class="s2">&quot;9.3&quot;</span>,
+            <span class="s2">&quot;bill_ext_calls&quot;</span> : <span class="s2">&quot;7.0&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;46.0&quot;</span>,
+            <span class="s2">&quot;bill_ext_sms&quot;</span> : <span class="s2">&quot;0.3&quot;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&quot;bill_package&quot;</span> : <span class="s2">&quot;10.5&quot;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+</pre></div>
+
+
+<h2>思考</h2>
+<p>大多数情况下字典推导能做到的，通过创建一个元组序列然后把它传给 dict() 函数也能实现。比如：</p>
+<div class="highlight"><pre><span></span><span class="nv">p1</span> <span class="o">=</span> dict<span class="o">((</span>key, value<span class="o">)</span> <span class="k">for</span> key, value in prices.items<span class="o">()</span> <span class="k">if</span> value &gt; <span class="m">200</span><span class="o">)</span>
+</pre></div>
+
+
+<p>但是，字典推导方式表意更清晰，并且实际上也会运行的更快些 (在这个p1中，实际测试几乎比 dcit() 函数方式快整整一倍)。</p>
+<p>有时候完成同一件事会有多种方式。比如，p2程序也可以像这样重写：</p>
+<div class="highlight"><pre><span></span><span class="c1"># Make a dictionary of tech stocks</span>
+<span class="nv">tech_names</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;AAPL&#39;</span>, <span class="s1">&#39;IBM&#39;</span>, <span class="s1">&#39;HPQ&#39;</span>, <span class="s1">&#39;MSFT&#39;</span> <span class="o">}</span>
+<span class="nv">p2</span> <span class="o">=</span> <span class="o">{</span> key:prices<span class="o">[</span>key<span class="o">]</span> <span class="k">for</span> key in prices.keys<span class="o">()</span> <span class="p">&amp;</span> tech_names <span class="o">}</span>
+</pre></div>
+
+
+<p>但是，运行时间测试结果显示这种方案大概比第一种方案慢1.6倍。</p>
+<p>所以，完成一个需求，方案并不是唯一的，也并没有最完美的，只有更好的解决方案，如果对程序运行性能要求比较高的话，这就需要花点时间去做计时测试了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>2017-5-15 pandas-入门</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017-5-15-pandas-ru-men.html" rel="bookmark"
+           title="Permalink to 2017-5-15 pandas-入门">2017-5-15 pandas-入门</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-15T22:49:44+08:00">
+                Published: Mon 15 May 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/pandas.html">[Pandas</a> <a href="/tag/python.html">Python]</a> </p>
+</footer><!-- /.post-info -->      <h2>数据结构</h2>
+<div class="highlight"><pre><span></span><span class="n">Series</span><span class="o">:</span> <span class="err">类似于一维数组的对象；索引（</span><span class="n">index</span><span class="err">）在左，数据（</span><span class="n">value</span><span class="err">）在右，索引自动创建</span>
+<span class="n">DataFrame</span><span class="o">:</span> <span class="err">一种表格型数据结构；二维结构，每列可以存不同类型的值，索引包含行索引及列索引</span>
+</pre></div>
+
+
+<h3>创建Series</h3>
+<div class="highlight"><pre><span></span>import pandas as pd
+<span class="nv">ser_obj</span> <span class="o">=</span> pd.Series<span class="o">(</span>range<span class="o">(</span><span class="m">10</span>, <span class="m">20</span><span class="o">))</span>
+</pre></div>
+
+
+<!--more-->
+
+<h3>获取数据及索引</h3>
+<div class="highlight"><pre><span></span><span class="c1"># 获取索引</span>
+ser_obj.index
+<span class="c1"># 获取数据</span>
+ser_obj.values
+</pre></div>
+
+
+<h3>通过索引获取数据</h3>
+<div class="highlight"><pre><span></span>ser_obj<span class="o">[</span><span class="m">0</span><span class="o">]</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

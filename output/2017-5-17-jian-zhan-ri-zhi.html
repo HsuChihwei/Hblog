@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>2017-5-17 建站日志</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/2017-5-17-jian-zhan-ri-zhi.html" rel="bookmark"
+           title="Permalink to 2017-5-17 建站日志">2017-5-17 建站日志</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-17T21:39:02+08:00">
+                Published: Wed 17 May 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/hexo.html">[Hexo</a> <a href="/tag/blog.html">Blog]</a> </p>
+</footer><!-- /.post-info -->      <p>{% note success %} 未完待续... {% endnote %}
+<!-- more --></p>
+<h3><strong>2017-05-19：</strong></h3>
+<h3>添加新 Page</h3>
+<hr>
+<p>1.用如下命令添加新page:</p>
+<div class="highlight"><pre><span></span>hexo new page &quot;categories&quot;
+hexo new page &quot;tags&quot;
+hexo new page &quot;Python&quot;
+hexo new page &quot;Linux&quot;
+hexo new page &quot;Notes&quot;
+hexo new page &quot;Something&quot;
+hexo new page &quot;Links&quot;
+hexo new page &quot;About&quot;
+</pre></div>
+
+
+<p>2.打开<code>主题配置文件``\themes\next\_config.yml</code>文件，在<code>menu</code>中添加：</p>
+<div class="highlight"><pre><span></span><span class="n">menu</span><span class="o">:</span>
+  <span class="n">home</span><span class="o">:</span> <span class="o">/</span>
+  <span class="n">archives</span><span class="o">:</span> <span class="o">/</span><span class="n">archives</span>
+  <span class="n">categories</span><span class="o">:</span> <span class="o">/</span><span class="n">categories</span>
+  <span class="n">tags</span><span class="o">:</span> <span class="o">/</span><span class="n">tags</span>
+  <span class="n">Python</span><span class="o">:</span> <span class="o">/</span><span class="n">Python</span>
+  <span class="n">Linux</span><span class="o">:</span> <span class="o">/</span><span class="n">Linux</span>
+  <span class="n">Notes</span><span class="o">:</span> <span class="o">/</span><span class="n">Notes</span>
+  <span class="n">Something</span><span class="o">:</span> <span class="o">/</span><span class="n">Something</span>
+  <span class="n">Links</span><span class="o">:</span> <span class="o">/</span><span class="n">Links</span>
+  <span class="n">About</span><span class="o">:</span> <span class="o">/</span><span class="n">About</span>
+</pre></div>
+
+
+<p>3.打开<code>\themes\next\languages\zh-Hans.yml</code>，修改<code>menu</code>：</p>
+<div class="highlight"><pre><span></span><span class="n">menu</span><span class="o">:</span>
+  <span class="n">home</span><span class="o">:</span> <span class="err">首页</span>
+  <span class="n">archives</span><span class="o">:</span> <span class="err">归档</span>
+  <span class="n">categories</span><span class="o">:</span> <span class="err">分类</span>
+  <span class="n">tags</span><span class="o">:</span> <span class="err">标签</span>
+  <span class="n">python</span><span class="o">:</span> <span class="n">Python</span>
+  <span class="n">linux</span><span class="o">:</span> <span class="n">Linux</span>
+  <span class="n">notes</span><span class="o">:</span> <span class="err">笔记</span>
+  <span class="n">something</span><span class="o">:</span> <span class="err">有料</span>
+  <span class="n">links</span><span class="o">:</span> <span class="err">链接</span>
+  <span class="n">about</span><span class="o">:</span> <span class="err">关于</span>
+</pre></div>
+
+
+<p>*注意这里第一列必须全为小写。</p>
+<p>*这是简体中文的配置文件，如果你的博客用的是其他语言，请打开对应的文件。</p>
+<h3>修改blog页面配色</h3>
+<hr>
+<h4>添加自定义颜色</h4>
+<p>打开<code>\themes\next\source\css\ _variables\base.styl</code>文件，修改：</p>
+<div class="highlight"><pre><span></span>// Colors
+// colors for use across theme.
+// --------------------------------------------------
+$whitesmoke   = #f5f5f5
+$gainsboro    = #eee
+$gray-lighter = #ddd
+$grey-light   = #ccc
+$grey         = #bbb
+$grey-dark    = #999
+$grey-dim     = #666
+$black-light  = #555
+$black-dim    = #333
+$black-deep   = #222
+$red          = #ff2a2a
+$blue-bright  = #87daff
+$blue         = #0684bd
+$blue-deep    = #262a30
+$orange       = #fc6423
+// 下面是我自定义的颜色
+$my-link-blue = #0593d3  //链接颜色
+$my-link-hover-blue = #0477ab  //鼠标悬停后颜色
+$my-code-foreground = #dd0055  // 用``围出的代码块字体颜色
+$my-code-background = #eee  // 用``围出的代码块背景颜色
+</pre></div>
+
+
+<h4>修改超链接颜色</h4>
+<p>还是<code>base.styl</code>文件，修改这几行：</p>
+<div class="highlight"><pre><span></span>// Global link color.
+$link-color                   = $my-link-blue
+$link-hover-color             = $my-link-hover-blue
+$link-decoration-color        = $gray-lighter
+$link-decoration-hover-color  = $my-link-hover-blue
+</pre></div>
+
+
+<p>预览：
+<img alt="修改超链接颜色" src="http://ohhmsby4v.bkt.clouddn.com/image/2017-05-19_%E5%BB%BA%E7%AB%99%E6%97%A5%E5%BF%97_%E8%B6%85%E9%93%BE%E6%8E%A5.png"></p>
+<h4>修改小型代码块颜色</h4>
+<p>依旧是<code>base.styl</code>文件，修改<code>$code-background</code>和<code>$code-foreground</code>的值：</p>
+<div class="highlight"><pre><span></span>// Code &amp; Code Blocks
+// 用``围出的代码块
+// --------------------------------------------------
+$code-font-family               = $font-family-monospace
+$code-font-size                 = 15px
+$code-background                = $my-code-background
+$code-foreground                = $my-code-foreground
+$code-border-radius             = 4px
+</pre></div>
+
+
+<p>预览：
+<img alt="修改小型代码块颜色" src="http://ohhmsby4v.bkt.clouddn.com/image/2017-05-19_%E5%BB%BA%E7%AB%99%E6%97%A5%E5%BF%97_%E4%BB%A3%E7%A0%81%E5%9D%97.png"></p>
+<h3>修改blog页面字体大小</h3>
+<hr>
+<p>打开<code>\themes\next\source\css\ _variables\base.styl</code>文件，找到：</p>
+<div class="highlight"><pre><span></span>// Font size
+$font-size-base           = 14px
+</pre></div>
+
+
+<p>改为：</p>
+<div class="highlight"><pre><span></span>$font-size-base           = 16px
+</pre></div>
+
+
+<h3>修改blog页面宽度</h3>
+<hr>
+<p>现在一般都用宽屏显示器，博客页面两侧留白太多，调整一下宽度。</p>
+<p>1.打开<code>\themes\next\source\css\_common\components\post\post-expand.styl</code>，找到:</p>
+<div class="highlight"><pre><span></span>@media (max-width: 767px)
+</pre></div>
+
+
+<p>改为</p>
+<div class="highlight"><pre><span></span>@media (max-width: 1080px)
+</pre></div>
+
+
+<p>2.打开<code>\themes\next\source\css\ _variables\base.styl</code>文件，找到：</p>
+<div class="highlight"><pre><span></span>$main-desktop                   = 960px
+$main-desktop-large             = 1200px
+$content-desktop                = 700px
+</pre></div>
+
+
+<p>改为：</p>
+<div class="highlight"><pre><span></span>$main-desktop                   = 1080px
+$main-desktop-large             = 1200px
+$content-desktop                = 810px
+</pre></div>
+
+
+<h3>修改博客部署的message</h3>
+<hr>
+<p>在<code>\node_modules\hexo-deployer-git\lib\deployer.js</code>文件末尾找到：</p>
+<div class="highlight"><pre><span></span><span class="x">Site updated: </span><span class="cp">{{</span> <span class="nv">now</span><span class="o">(</span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<p>改得个性化一点：</p>
+<div class="highlight"><pre><span></span><span class="x">好家伙又改版了悟の迹: </span><span class="cp">{{</span> <span class="nv">now</span><span class="o">(</span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<h3>Github项目主页添加README</h3>
+<hr>
+<h4>问题原因：</h4>
+<p>Github上博客的仓库主页没有README，如果把<code>README.md</code>放入<code>source</code>文件夹，<code>hexo g</code>生成时会被解析成html文件，而放到<code>public</code>文件夹中，生成时又会自动删除。</p>
+<h4>解决方法:</h4>
+<p>在<code>source</code>目录下新建文件<code>README.mdown</code>，在里面写README即可。<code>hexo g</code>会把它复制到<code>public</code>文件夹，且不会被解析成html</p>
+<h3>Github项目主页添加LICENSE</h3>
+<hr>
+<p>修改<code>主题配置文件</code>，找到：</p>
+<div class="highlight"><pre><span></span># Creative Commons 4.0 International License.
+# http://creativecommons.org/
+# Available: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero
+creative_commons: by-nc-sa
+#creative_commons:
+</pre></div>
+
+
+<p>将其中第 4 行的注释放开，然后选择你想使用的 LICENSE 即可，可选项参照第 3 行。</p>
+<h3>SEO优化</h3>
+<hr>
+<p>为优化SEO，更改首页标题格式为「关键词-网站名称 - 网站描述」</p>
+<p>打开<code>\themes\next\layout\index.swig</code>文件，找到这行代码：</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">config.title</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+
+
+<p>把它改成：</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{{</span> <span class="nv">theme.keywords</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">config.title</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">theme.description</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+
+
+<h3>添加“Fork me on Github” ribbon</h3>
+<hr>
+<p>1.点击<a href="https://github.com/blog/273-github-ribbons">Fork me on Github</a>；</p>
+<p>2.给blog主页选择一个绶带（ribbon），并复制相应代码；</p>
+<p>3.找到正在使用的<code>theme</code>下的<code>layout</code>文件，将代码插入即可；</p>
+<p>4.比如我选择了<code>红色</code>的ribbon，使用的<code>themes</code>为next，那么只要打开 <code>blog\themes\next\layout\_layout.swig</code>文件，复制下面这段代码，放在最后，标签</body>之前即可。（注意将<code>https://github.com/you</code>改为你自己的github链接）</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;https://github.com/you&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">style=</span><span class="s">&quot;position: absolute; top: 0; right: 0; border: 0;&quot;</span> <span class="na">src=</span><span class="s">&quot;https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67&quot;</span>
+    <span class="na">alt=</span><span class="s">&quot;Fork me on GitHub&quot;</span> <span class="na">data-canonical-src=</span><span class="s">&quot;https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+
+
+<h3>添加404公益页面</h3>
+<hr>
+<p>在<code>blog/source</code>下新建自己的<code>404.html</code>文件即可，强推<a href="http://www.qq.com/404/">腾讯公益404</a>，代码可参考如下：</p>
+<div class="highlight"><pre><span></span>---
+layout: default
+---
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+         <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;title&gt;</span>404<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+         <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="na">homePageUrl=</span><span class="s">&quot;http://chihweihsu.com/&quot;</span> <span class="na">homePageName=</span><span class="s">&quot;回到悟の迹&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<h3>文章阅读次数统计</h3>
+<hr>
+<p>1.注册<a href="https://leancloud.cn/dashboard/login.html#/signup">LeanCloud</a>帐号并验证邮箱；</p>
+<p>2.创建应用，新建一个应用来专门进行博客的访问统计的数据操作；</p>
+<p>3.创建完成之后我们点击新创建的应用的名字来进行该应用的参数配置；</p>
+<p>4.新建一个Class用来专门保存我们博客的文章访问量等数据；</p>
+<p>5.新建Class名字必须为Counter，设置默认的ACL权限，建议在此处选择无限制；</p>
+<p>6.选择左侧的<code>应用Key</code>选项，拿到我们创建应用的<code>AppID</code>以及<code>AppKey</code>；</p>
+<p>7.编辑 <code>主题配置文件</code>，如下:</p>
+<div class="highlight"><pre><span></span><span class="n">leancloud_visitors</span><span class="o">:</span>
+  <span class="n">enable</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="n">app_id</span><span class="o">:</span> <span class="n">joaeuuc4hsqudUUwx4gIvGF6</span><span class="o">-</span><span class="n">gzGzoHsz</span>
+  <span class="n">app_key</span><span class="o">:</span> <span class="n">E9UJsJpw1omCHuS22PdSpKoh</span>
+</pre></div>
+
+
+<p>8.ok，部署后可见。</p>
+<h3><strong>2017-05-18：</strong></h3>
+<h3>配置导航栏网站小图标</h3>
+<hr>
+<p>挑选一张图片，名字改为<code>favicon.ico</code>，放到<code>..\blog\source</code>下，配置<code>主题配置文件</code>如下：</p>
+<div class="highlight"><pre><span></span>favicon: /favicon.ico
+</pre></div>
+
+
+<h3>集成百度分享模块</h3>
+<hr>
+<p>首先，编辑 <code>站点配置文件</code>，末尾添加字段:</p>
+<div class="highlight"><pre><span></span><span class="n">baidushare</span><span class="o">:</span> <span class="kc">true</span> <span class="err">#百度分享功能</span>
+</pre></div>
+
+
+<p>其次，编辑<code>主题配置文件</code>，找到如下代码位置，去掉最后两行#注释，并选择展示方式，建议slide悬浮状态：</p>
+<div class="highlight"><pre><span></span># Baidu Share
+# Available value:
+#    button | slide
+# Warning: Baidu Share does not support https.
+baidushare:
+ type: slide #百度分享展示的方式button|slide
+</pre></div>
+
+
+<p>*注意：百度分享不支持https方式，可以自己买个域名绑定，或者搜下<code>百度分享不支持https的解决方案</code>，有前辈做出解答。</p>
+<p>其实，现在已经完成了；但是，为了折腾，我们接着来自定义百度分享的显示，点击<a href="http://share.baidu.com/code">代码获取</a>，一步步进行定制，走完流程，点击<code>直接获取代码</code>，拿到一段js代码，类似如下：</p>
+<div class="highlight"><pre><span></span>&lt;script&gt;
+    window._bd_share_config = {
+        &quot;common&quot;: {
+            &quot;bdSnsKey&quot;: {},
+            &quot;bdText&quot;: &quot;&quot;,
+            &quot;bdMini&quot;: &quot;2&quot;,
+            &quot;bdMiniList&quot;: [
+                &quot;mshare&quot;,
+                &quot;bdysc&quot;,
+                &quot;evernotecn&quot;,
+                &quot;tqq&quot;,
+                &quot;weixin&quot;,
+                &quot;sqq&quot;,
+                &quot;qzone&quot;,
+                &quot;douban&quot;,
+                &quot;tsina&quot;,
+                &quot;tieba&quot;,
+                &quot;youdao&quot;,
+                &quot;isohu&quot;,
+                &quot;mail&quot;,
+                &quot;ty&quot;,
+                &quot;fbook&quot;,
+                &quot;twi&quot;,
+                &quot;linkedin&quot;,
+                &quot;copy&quot;,
+                &quot;print&quot;
+            ],
+            &quot;bdPic&quot;: &quot;&quot;,
+            &quot;bdStyle&quot;: &quot;0&quot;,
+            &quot;bdSize&quot;: &quot;16&quot;
+        },
+        &quot;slide&quot;: {
+            &quot;type&quot;: &quot;slide&quot;,
+            &quot;bdImg&quot;: &quot;5&quot;,
+            &quot;bdPos&quot;: &quot;right&quot;,
+            &quot;bdTop&quot;: &quot;53.5&quot;
+        },
+        &quot;image&quot;: {
+            &quot;viewList&quot;: [
+                &quot;weixin&quot;,
+                &quot;qzone&quot;,
+                &quot;tsina&quot;,
+                &quot;evernotecn&quot;,
+                &quot;douban&quot;,
+                &quot;bdysc&quot;
+            ],
+            &quot;viewText&quot;: &quot;分享到：&quot;,
+            &quot;viewSize&quot;: &quot;16&quot;
+        },
+        &quot;selectShare&quot;: {
+            &quot;bdContainerClass&quot;: null,
+            &quot;bdSelectMiniList&quot;: [
+                &quot;weixin&quot;,
+                &quot;qzone&quot;,
+                &quot;tsina&quot;,
+                &quot;evernotecn&quot;,
+                &quot;douban&quot;,
+                &quot;bdysc&quot;
+            ]
+        }
+    };
+&lt;/script&gt;
+</pre></div>
+
+
+<p>最后，打开如下文件<code>blog\themes\next\layout\_partials\share\baidushare.swing</code>，替换掉里面的js代码，本文以<code>slide</code>模式为例，替换掉</p>
+<div class="highlight"><pre><span></span>{% elseif theme.baidushare.type === &quot;slide&quot; %}
+</pre></div>
+
+
+<p>后面的<code>&lt;script&gt;...&lt;/script&gt;</code>即可。</p>
+<h3><strong>2017-05-17：</strong></h3>
+<h3>markdown写文章时，添加居中引用模块</h3>
+<hr>
+<p>只需在写文章时，添加如下标签即可：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;blockquote</span> <span class="na">class=</span><span class="s">&quot;blockquote-center&quot;</span><span class="nt">&gt;</span>
+    优秀的人，不是不合群，而是他们合群的人里面没有你
+<span class="nt">&lt;/blockquote&gt;</span>
+</pre></div>
+
+
+<p>预览：
+<blockquote class="blockquote-center">优秀的人，不是不合群，而是他们合群的人里面没有你</blockquote></p>
+<h3><strong>2017-05-16：</strong></h3>
+<h3>首页文章预览添加图片</h3>
+<hr>
+<p>打开<code>scaffolds/post.md</code>文件，在默认参数中添加如下参数：</p>
+<div class="highlight"><pre><span></span># 首页文章预览添加图片：
+photos:
+    - http://xxx.com/photo1.jpg
+    - http://xxx.com/photo2.jpg
+</pre></div>
+
+
+<p>预览：
+<img alt="首页文章预览添加图片" src="http://ohhmsby4v.bkt.clouddn.com/image/2017-05-17_%E5%BB%BA%E7%AB%99%E6%97%A5%E5%BF%97_pandas.png"></p>
+<h3>首页文章摘要模式</h3>
+<hr>
+<p>首页开启文章摘要模式，不全文显示，而是出现<code>阅读全文&gt;</code>，只需在<code>主题配置文件</code>中找到<code>auto_excerpt</code>属性进行配置</p>
+<div class="highlight"><pre><span></span># Automatically Excerpt. Not recommend.
+# Please use &lt;!-- more --&gt; in the post to control excerpt accurately.
+auto_excerpt:
+  enable: true #改写为true
+  length: 150 #默认展示的高度
+</pre></div>
+
+
+<p>或者，在Markdown文章中不想显示的位置，添加如下代码：</p>
+<div class="highlight"><pre><span></span>这里显示
+&lt;!--more--&gt;
+这里不显示
+</pre></div>
+
+
+<p>预览：
+<img alt="首页文章摘要模式" src="http://ohhmsby4v.bkt.clouddn.com/image/2017-05-17_%E5%BB%BA%E7%AB%99%E6%97%A5%E5%BF%97_%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87.png"></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

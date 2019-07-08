@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - [Python</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-10-16-the-unit-test-and-mock-in-python.html">2017-10-16 The unit test and mock in python</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-16T18:48:19+08:00">
+                Published: Mon 16 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/unittest.html">unittest</a> <a href="/tag/mock.html">mock</a> <a href="/tag/dan-yuan-ce-shi.html">单元测试</a> <a href="/tag/dang-ban.html">挡板</a> <a href="/tag/ce-shi.html">测试]</a> </p>
+</footer><!-- /.post-info --><h3>mock 功效</h3>
+<!--more-->
+
+<h4>完成功能测试</h4>
+<div class="highlight"><pre><span></span><span class="c1"># module.py</span>
+
+<span class="k">class</span> <span class="nc">Count</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># test.py</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">module</span> <span class="kn">import</span> <span class="n">Count</span>
+
+<span class="k">class</span> <span class="nc">MockDemo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">Count</span><span class="p">()</span>
+        <span class="n">count</span><span class="o">.</span><span class="n">add</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>       
+        <span class="c1"># side_effect参数和return_value是相反的。它给mock分配了可替换的结果，覆盖了return_value。简单的说，一个模拟工厂调用将返回side_effect值，而不是return_value；所以，设置side_effect参数为Count类add()方法，那么return_value的作用失效。</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="c1"># 将会真正的调用add()方法，得到的返回值为16（8+8）。通过print打印结果。</span>
+        <span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="c1"># 检查mock方法是否获得了正确的参数。</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h4>解决测试依赖</h4>
+<blockquote>
+<p>例如，我们要测试A模块，然后A模块依赖于B模块的调用。但是，由于B模块的改变，导致了A模块返回结果的改变，从而使A模块的测试用例失败。其实，对于A模块，以及A模块的用例来说，并没有变化，不应该失败才对。这个时候就是mock发挥作用的时候了。通过mock模拟掉影响A模块的部分（B模块）。至于mock掉的部分（B模块）应该由其它用例来测试。</p>
+<p>add_and_multiply()函数依赖了multiply()函数的返回值</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="c1"># function.py</span>
+<span class="k">def</span> <span class="nf">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">addition</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="n">multiple</span> <span class="o">=</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+
+<span class="c1"># test.py</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">function</span>
+
+
+<span class="k">class</span> <span class="nc">MyTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add_and_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">addition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<blockquote>
+<p>修改multiply()函数的代码，这样测试会失败</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">3</span>
+</pre></div>
+
+
+<blockquote>
+<p>把 multiply()函数mock掉，解决依赖</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
+<span class="kn">import</span> <span class="nn">function</span>
+
+<span class="k">class</span> <span class="nc">MyTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;function.multiply&quot;</span><span class="p">)</span>
+    <span class="c1"># patch()装饰/上下文管理器可以很容易地模拟类或对象在模块测试。在测试过程中，您指定的对象将被替换为一个模拟（或其他对象），并在测试结束时还原。这里模拟function.py文件中multiply()函数。</span>
+    <span class="k">def</span> <span class="nf">test_add_and_multiply2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_multiply</span><span class="p">):</span>
+        <span class="c1"># 在定义测试用例中，将mock的multiply()函数（对象）重命名为 mock_multiply对象。</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">mock_multiply</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="c1"># 设定mock_multiply对象的返回值为固定的15。</span>
+        <span class="n">addition</span><span class="p">,</span> <span class="n">multiple</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_and_multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">mock_multiply</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="c1"># 检查mock_multiply方法的参数是否正确。</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">addition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">multiple</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>Mock attributes in Python mock?</h3>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;requests.post&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">patched_post</span><span class="p">:</span>
+    <span class="nb">type</span><span class="p">(</span><span class="n">patched_post</span><span class="o">.</span><span class="n">return_value</span><span class="p">)</span><span class="o">.</span><span class="n">ok</span> <span class="o">=</span> <span class="n">PropertyMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>Mock session in requests library？</h3>
+<div class="highlight"><pre><span></span><span class="c1"># main.py</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">do_session_get</span><span class="p">():</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span>
+
+<span class="c1"># tests.py</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+
+<span class="kn">from</span> <span class="nn">main</span> <span class="kn">import</span> <span class="n">do_session_get</span>
+
+<span class="c1"># The module of we mock, return the exact data that we expected</span>
+<span class="k">def</span> <span class="nf">mocked_requests</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># print args</span>
+    <span class="k">class</span> <span class="nc">MockResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span> <span class="o">=</span> <span class="n">json_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+
+        <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://someurl.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+<span class="c1"># from main import do_session_get</span>
+
+<span class="k">class</span> <span class="nc">TestDoSessionGet</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">&#39;requests.session&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_should_mock_session_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocked_session</span><span class="p">):</span>
+        <span class="n">mocked_session</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">get</span><span class="o">=</span><span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">side_effect</span><span class="o">=</span><span class="n">mocked_requests</span><span class="p">))</span>
+        <span class="c1"># print do_session_get()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">do_session_get</span><span class="p">(),</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>assert 常用断言速查</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assertEqual(a, b)</td>
+<td>a == b</td>
+</tr>
+<tr>
+<td>assertNotEqual(a, b)</td>
+<td>a != b</td>
+</tr>
+<tr>
+<td>assertGreater(a, b)</td>
+<td>a &gt; b</td>
+</tr>
+<tr>
+<td>assertGreaterEqual(a, b)</td>
+<td>a &gt;= b</td>
+</tr>
+<tr>
+<td>assertLess(a, b)</td>
+<td>a &lt; b</td>
+</tr>
+<tr>
+<td>assertLessEqual(a, b)</td>
+<td>a &lt;= b</td>
+</tr>
+<tr>
+<td>assertTrue(x)</td>
+<td>bool(x) is True</td>
+</tr>
+<tr>
+<td>assertFalse(x)</td>
+<td>bool(x) is False</td>
+</tr>
+<tr>
+<td>assertIs(a, b)</td>
+<td>a is b</td>
+</tr>
+<tr>
+<td>assertIsNot(a, b)</td>
+<td>a is not b</td>
+</tr>
+<tr>
+<td>assertIsNone(x)</td>
+<td>x is None</td>
+</tr>
+<tr>
+<td>assertIsNotNone(x)</td>
+<td>x is not None</td>
+</tr>
+<tr>
+<td>assertIn(a, b)</td>
+<td>a in b</td>
+</tr>
+<tr>
+<td>assertNotIn(a, b)</td>
+<td>a not in b</td>
+</tr>
+<tr>
+<td>assertIsInstance(a, b)</td>
+<td>isinstance(a, b)</td>
+</tr>
+<tr>
+<td>assertNotIsInstance(a, b)</td>
+<td>not isinstance(a, b)</td>
+</tr>
+</tbody>
+</table>
+<h3>干货：mock模板（requests）</h3>
+<div class="highlight"><pre><span></span><span class="c1"># common_test.py</span>
+
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">If the module is import from others files, like:</span>
+
+<span class="sd">from my.great.package import FlowType</span>
+
+<span class="sd">Then, we should do this, below:</span>
+
+<span class="sd"># Now we must patch &#39;my.great.package.requests.get&#39;</span>
+<span class="sd">@mock.patch(&#39;my.great.package.requests.get&#39;, side_effect=mocked_requests)</span>
+
+<span class="sd">instead of &quot;@mock.patch(&#39;common_test.requests.get&#39;, side_effect=mocked_requests)&quot;</span>
+<span class="sd">because the requests module was imported in that file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># The module that need unittest</span>
+<span class="k">class</span> <span class="nc">FlowType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">flow_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://chihweihsu.com/&#39;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resp</span>
+
+<span class="c1"># The data of we mock</span>
+<span class="n">mock_status_code</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">mock_text</span> <span class="o">=</span> <span class="s1">&#39;You are my sunshine!&#39;</span>
+<span class="n">mock_json</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="s1">&#39;You are my sunshine!&#39;</span><span class="p">}</span>
+<span class="n">mock_content</span> <span class="o">=</span> <span class="s1">&#39;You are my sunshine!&#39;</span>
+
+<span class="c1"># The module of we mock, return the exact data that we expected</span>
+<span class="k">def</span> <span class="nf">mocked_requests</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">MockResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span> <span class="o">=</span> <span class="n">json_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+
+        <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_data</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://chihweihsu.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="n">mock_status_code</span><span class="p">,</span> <span class="n">mock_text</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">mock_json</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">mock_content</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;http://someurl.com/&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;success&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MockResponse</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+
+<span class="c1"># The whole test case module</span>
+<span class="k">class</span> <span class="nc">TestCommon</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># We patch &#39;common_test.requests.get&#39; with our own method. The mock object is passed in to our test case method.</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">&#39;common_test.requests.get&#39;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">mocked_requests</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_flow_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocked_get</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">FlowType</span><span class="p">()</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flow_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">mock_status_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">mock_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">mock_content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">mock_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-28-python-bian-ma-zhi-shan.html" rel="bookmark"
+                           title="Permalink to 2017-9-28 Python 编码之禅">2017-9-28 Python 编码之禅</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-28T14:39:44+08:00">
+                Published: Thu 28 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/decode.html">decode</a> <a href="/tag/encode.html">encode</a> <a href="/tag/zong-jie.html">总结</a> <a href="/tag/bian-ma.html">编码]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>平时工作中经常碰到编码、解码、乱码……类似的问题不胜其烦，如街边小广告一般异常讨厌，需要花时间好好整理一番，“一”绝后患。</p>
+</blockquote>
+<!--more-->
+
+<p>str(s)与unicode(s)</p>
+<blockquote>
+<p>str(s)和unicode(s)是两个工厂方法，分别返回str字符串对象和unicode字符串对象；
+str(s)是s.encode(‘ascii’)的简写；
+unicode(s)是s.decode(‘ascii’)的简写；</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="nb">str</span>
+<span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span><span class="p">)</span>
+
+<span class="nb">object</span> <span class="o">-</span> <span class="nb">object</span> <span class="n">whose</span> <span class="n">informal</span> <span class="n">representation</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">returned …</span></pre></div>
+                <a class="readmore" href="/2017-9-28-python-bian-ma-zhi-shan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-14-tong-guo-__slots__jie-sheng-nei-cun.html" rel="bookmark"
+                           title="Permalink to 2017-9-14 通过__slots__节省内存">2017-9-14 通过__slots__节省内存</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-14T15:01:38+08:00">
+                Published: Thu 14 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/nei-cun.html">内存</a> <a href="/tag/slots.html">slots]</a> </p>
+</footer><!-- /.post-info -->                <!--more-->
+
+<p><a href="http://www.datadependence.com/2016/07/pythonic-code-video-series-slots/">见原文</a></p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Measurement</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+
+
+<blockquote>
+<p>merge dict </p>
+</blockquote>
+<p><a href="http://www.datadependence.com/2016/08/pythonic-code-video-series-merging-dictionaries/">merged_dict</a></p>
+<div class="highlight"><pre><span></span><span class="n">dict_merged</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">c</span><span class="p">}</span>
+</pre></div>
+                <a class="readmore" href="/2017-9-14-tong-guo-__slots__jie-sheng-nei-cun.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-12-str-vs-jsondumps.html" rel="bookmark"
+                           title="Permalink to 2017-9-12 str() vs json.dumps()">2017-9-12 str() vs json.dumps()</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-12T09:39:13+08:00">
+                Published: Tue 12 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/string.html">string</a> <a href="/tag/json.html">json]</a> </p>
+</footer><!-- /.post-info -->                <h3>str() 与 json.dumps()的区别</h3>
+<!--more-->
+
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;jsonKey&#39;</span><span class="p">:</span> <span class="s1">&#39;jsonValue&#39;</span><span class="p">,</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s2">&quot;jsonKey&quot;</span><span class="p">:</span> <span class="s2">&quot;jsonValue&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s1">&#39;jsonKey&#39;</span><span class="p">:</span> <span class="s1">&#39;jsonValue&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="s1">&#39;{&quot;jsonKey&quot;: &quot;jsonValue&quot;, &quot;title&quot;: &quot;hello world&quot;}&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="s2">&quot;{&#39;jsonKey&#39;: &#39;jsonValue&#39;, &#39;title&#39;: &#39;hello world&#39;}&quot;</span>
+</pre></div>
+
+
+<blockquote>
+<p>In fact, I am more interested in …</p></blockquote>
+                <a class="readmore" href="/2017-9-12-str-vs-jsondumps.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-7-ji-qi-xue-xi-fen-lei.html" rel="bookmark"
+                           title="Permalink to 2017-9-7 机器学习分类">2017-9-7 机器学习分类</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-07T08:19:51+08:00">
+                Published: Thu 07 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/ji-qi-xue-xi.html">机器学习]</a> </p>
+</footer><!-- /.post-info -->                <h4>机器学习：</h4>
+<!--more-->
+
+<blockquote>
+<ul>
+<li>线性回归</li>
+<li>岭回归</li>
+<li>LASSO</li>
+<li>弹性网络</li>
+<li>逻辑回归</li>
+<li>Softmax 回归</li>
+<li>决策树</li>
+<li>ID3</li>
+<li>C4.5</li>
+<li>CART</li>
+<li>神经网络</li>
+<li>普通网络</li>
+<li>CNN</li>
+<li>RNN</li>
+<li>GAN</li>
+</ul>
+</blockquote>
+<h4>架构总览：</h4>
+<blockquote>
+<p>数据仓库
+- SparkStreaming
+  * tensorflow
+  * scikit-learn
+模型库
+- django
+  * xgboost
+  * SparkMLLib
+特征库
+- redis
+  * numpy
+  * pandas</p>
+</blockquote>
+                <a class="readmore" href="/2017-9-7-ji-qi-xue-xi-fen-lei.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-7-ji-qi-xue-xi-lu-xian.html" rel="bookmark"
+                           title="Permalink to 2017-9-7 机器学习路线">2017-9-7 机器学习路线</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-07T07:21:28+08:00">
+                Published: Thu 07 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/ji-qi-xue-xi.html">机器学习</a> <a href="/tag/lu-xian.html">路线]</a> </p>
+</footer><!-- /.post-info -->                <h3>准备知识：</h3>
+<blockquote>
+<p>编程语言：Python，C++，Spark（大数据环境下）；
+知识储备：英语、线性代数、概率论、图论、神经科学。</p>
+</blockquote>
+<!--more-->
+
+<h4>第一步 统领大局：</h4>
+<blockquote>
+<p>建立大局观，是入门第一要务； 从宏观了解机器学习的全貌；
+机器学习：根据已有特征，选择模型，训练模型，预测未知数据；
+推荐书籍：
+-《图解机器学习》：通俗易懂，算法图解，入门必备；
+-《集体智慧编程》：代码实现，一个字“敲”；
+-《机器学习（周志华西瓜书）》：系统严谨，数学推导；</p>
+</blockquote>
+<h4>第二步 了解算法：</h4>
+<blockquote>
+<p>看遍所有算法原理，主要书籍：《机器学习（周志华）》；
+<code>coursera</code> 上Andrew NG的机器学习公开课，网易云也开了；
+邹博的《机器学习实战》；
+李沐《一起动手学习深度学习》；
+必学 …</p></blockquote>
+                <a class="readmore" href="/2017-9-7-ji-qi-xue-xi-lu-xian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-5-ji-suan-ti-zhi-lu.html" rel="bookmark"
+                           title="Permalink to 2017-9-5 计算体脂率">2017-9-5 计算体脂率</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-05T17:12:11+08:00">
+                Published: Tue 05 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/life.html">life]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>用来计算一个人的体脂率</p>
+</blockquote>
+<!--more-->
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_BFR</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;计算BMI及体脂率</span>
+<span class="sd">    :param weight: 体重（kg）</span>
+<span class="sd">    :param height: 身高（m）</span>
+<span class="sd">    :param age: 年龄（岁）</span>
+<span class="sd">    :param gender: 性别（男--1，女--0）</span>
+<span class="sd">    :returns: 体脂率，float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># BMI</span>
+    <span class="n">BMI</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">/</span><span class="p">(</span><span class="n">height</span><span class="o">*</span><span class="n">height</span><span class="p">)</span>
+    <span class="c1"># 体脂率 </span>
+    <span class="n">BFR</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">BMI</span> <span class="o">+</span> <span class="mf">0.23</span><span class="o">*</span><span class="n">age</span> <span class="o">-</span> <span class="mf">5.4</span> <span class="o">-</span> <span class="mf">10.8</span><span class="o">*</span><span class="n">gender</span>
+    <span class="k">return</span> <span class="n">BFR</span>
+
+<span class="n">get_BFR …</span></pre></div>
+                <a class="readmore" href="/2017-9-5-ji-suan-ti-zhi-lu.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-5-python-list-pai-xu-sort-sorted.html" rel="bookmark"
+                           title="Permalink to 2017-9-5 python list 排序 sort、sorted">2017-9-5 python  list 排序 sort、sorted</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-05T15:17:50+08:00">
+                Published: Tue 05 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/list.html">list</a> <a href="/tag/sort.html">sort]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>项目中，有一个list，list内部组成元素为dict，现需要根据dict中某个键的值来进行排序。</p>
+</blockquote>
+<!-- more -->
+
+<h3>代码实现：</h3>
+<blockquote>
+<p><code>reverse</code>: False--默认，正序；True--逆序，由大到小；
+ <code>key</code>: 可以根据<code>key</code>值自定义排序；
+ <code>sort</code>与<code>sorted</code>区别: <code>sort</code>list自身发生改变；<code>sorted</code>list本身不发生改变。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>        
+
+ <span class="c1"># sorted 用法</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>                  <span class="c1">#将a从小到大排序,不影响a本身结构 </span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>   <span class="c1">#将a从大到小排序,不影响a本身结构 </span>
+<span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2 …</span></pre></div>
+                <a class="readmore" href="/2017-9-5-python-list-pai-xu-sort-sorted.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-31-zi-dong-sheng-cheng-zhu-shi-wen-dang-docstring.html" rel="bookmark"
+                           title="Permalink to 2017-8-31 自动 生成注释文档（docstring）">2017-8-31 自动 生成注释文档（docstring）</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-31T20:22:52+08:00">
+                Published: Thu 31 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/linux.html">Linux</a> <a href="/tag/docstring.html">Docstring]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>项目中，发现很多函数、类没有注释说明，一个个弄比较繁琐，所以……</p>
+</blockquote>
+<!--more-->
+
+<h3><code>docstring</code>定义：</h3>
+<blockquote>
+<p>官方：A docstring is a string literal that occurs as the first statement in a module, function, class, or method definition. Such a docstring becomes the <strong>doc</strong> special attribute of that object；
+人话：“出现在模块、函数、类、方法里的第一个语句，就叫做<code>docsting</code>”；
+调用：使用<code>__doc__ …</code></p></blockquote>
+                <a class="readmore" href="/2017-8-31-zi-dong-sheng-cheng-zhu-shi-wen-dang-docstring.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-31-python-two-sum-wen-ti.html" rel="bookmark"
+                           title="Permalink to 2017-8-31 python two sum 问题">2017-8-31 python  two sum 问题</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-31T17:02:59+08:00">
+                Published: Thu 31 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/suan-fa.html">算法]</a> </p>
+</footer><!-- /.post-info -->                <h3>题目描述：</h3>
+<blockquote>
+<p>来自<code>LeetCode</code></p>
+</blockquote>
+<div class="highlight"><pre><span></span># Time:  O(n)
+# Space: O(n)
+
+# Given an array of integers, return indices of the two numbers
+# such that they add up to a specific target.
+#
+# You may assume that each input would have exactly one solution.
+#
+# Example:
+# Given nums = [2, 7, 11, 15], target = 9,
+#
+# Because …</pre></div>
+                <a class="readmore" href="/2017-8-31-python-two-sum-wen-ti.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 4
+        <a href="/tag/python2.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

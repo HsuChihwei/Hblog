@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+        <meta charset="utf-8" />
+        <title>Hsu's Home - Chihwei-Hsu</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Hsu's Home </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/2017-10-16-miao-shu-tong-ji-xue-bi-ji-udacity.html">2017-10-16 描述统计学笔记（Udacity）</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-10-16T18:48:19+08:00">
+                Published: Mon 16 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/tong-ji-xue.html">[统计学</a> <a href="/tag/shu-ju-fen-xi.html">数据分析]</a> </p>
+</footer><!-- /.post-info --><h3>how would you measure memory?</h3>
+<blockquote>
+<ol>
+<li>maybe can ask some question like what's food you eat yesterday,2 days ago, 5 days ago, 10days ago...</li>
+<li>give you a article,test how much time you take to keep in mind the whole article</li>
+<li>give you 1 hours, test how many words that you keep in mind
+<!--more--></li>
+</ol>
+</blockquote>
+<h3></h3>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-10-16-the-unit-test-and-mock-in-python.html" rel="bookmark"
+                           title="Permalink to 2017-10-16 The unit test and mock in python">2017-10-16 The unit test and mock in python</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-10-16T18:48:19+08:00">
+                Published: Mon 16 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/unittest.html">unittest</a> <a href="/tag/mock.html">mock</a> <a href="/tag/dan-yuan-ce-shi.html">单元测试</a> <a href="/tag/dang-ban.html">挡板</a> <a href="/tag/ce-shi.html">测试]</a> </p>
+</footer><!-- /.post-info -->                <h3>mock 功效</h3>
+<!--more-->
+
+<h4>完成功能测试</h4>
+<div class="highlight"><pre><span></span><span class="c1"># module.py</span>
+
+<span class="k">class</span> <span class="nc">Count</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># test.py</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">module</span> <span class="kn">import</span> <span class="n">Count</span>
+
+<span class="k">class</span> <span class="nc">MockDemo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">Count</span><span class="p">()</span>
+        <span class="n">count</span><span class="o">.</span><span class="n">add</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>       
+        <span class="c1"># side_effect参数和return_value是相反的。它给mock分配了可替换的结果，覆盖了return_value。简单的说，一个模拟工厂调用将返回side_effect值 …</span></pre></div>
+                <a class="readmore" href="/2017-10-16-the-unit-test-and-mock-in-python.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-28-python-bian-ma-zhi-shan.html" rel="bookmark"
+                           title="Permalink to 2017-9-28 Python 编码之禅">2017-9-28 Python 编码之禅</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-28T14:39:44+08:00">
+                Published: Thu 28 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/decode.html">decode</a> <a href="/tag/encode.html">encode</a> <a href="/tag/zong-jie.html">总结</a> <a href="/tag/bian-ma.html">编码]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>平时工作中经常碰到编码、解码、乱码……类似的问题不胜其烦，如街边小广告一般异常讨厌，需要花时间好好整理一番，“一”绝后患。</p>
+</blockquote>
+<!--more-->
+
+<p>str(s)与unicode(s)</p>
+<blockquote>
+<p>str(s)和unicode(s)是两个工厂方法，分别返回str字符串对象和unicode字符串对象；
+str(s)是s.encode(‘ascii’)的简写；
+unicode(s)是s.decode(‘ascii’)的简写；</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="nb">str</span>
+<span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span><span class="p">)</span>
+
+<span class="nb">object</span> <span class="o">-</span> <span class="nb">object</span> <span class="n">whose</span> <span class="n">informal</span> <span class="n">representation</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">returned …</span></pre></div>
+                <a class="readmore" href="/2017-9-28-python-bian-ma-zhi-shan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-14-tong-guo-__slots__jie-sheng-nei-cun.html" rel="bookmark"
+                           title="Permalink to 2017-9-14 通过__slots__节省内存">2017-9-14 通过__slots__节省内存</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-14T15:01:38+08:00">
+                Published: Thu 14 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/nei-cun.html">内存</a> <a href="/tag/slots.html">slots]</a> </p>
+</footer><!-- /.post-info -->                <!--more-->
+
+<p><a href="http://www.datadependence.com/2016/07/pythonic-code-video-series-slots/">见原文</a></p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Measurement</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+
+
+<blockquote>
+<p>merge dict </p>
+</blockquote>
+<p><a href="http://www.datadependence.com/2016/08/pythonic-code-video-series-merging-dictionaries/">merged_dict</a></p>
+<div class="highlight"><pre><span></span><span class="n">dict_merged</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">c</span><span class="p">}</span>
+</pre></div>
+                <a class="readmore" href="/2017-9-14-tong-guo-__slots__jie-sheng-nei-cun.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-12-str-vs-jsondumps.html" rel="bookmark"
+                           title="Permalink to 2017-9-12 str() vs json.dumps()">2017-9-12 str() vs json.dumps()</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-12T09:39:13+08:00">
+                Published: Tue 12 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/string.html">string</a> <a href="/tag/json.html">json]</a> </p>
+</footer><!-- /.post-info -->                <h3>str() 与 json.dumps()的区别</h3>
+<!--more-->
+
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;jsonKey&#39;</span><span class="p">:</span> <span class="s1">&#39;jsonValue&#39;</span><span class="p">,</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s2">&quot;jsonKey&quot;</span><span class="p">:</span> <span class="s2">&quot;jsonValue&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s1">&#39;jsonKey&#39;</span><span class="p">:</span> <span class="s1">&#39;jsonValue&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">}</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="s1">&#39;{&quot;jsonKey&quot;: &quot;jsonValue&quot;, &quot;title&quot;: &quot;hello world&quot;}&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="s2">&quot;{&#39;jsonKey&#39;: &#39;jsonValue&#39;, &#39;title&#39;: &#39;hello world&#39;}&quot;</span>
+</pre></div>
+
+
+<blockquote>
+<p>In fact, I am more interested in …</p></blockquote>
+                <a class="readmore" href="/2017-9-12-str-vs-jsondumps.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-7-ji-qi-xue-xi-fen-lei.html" rel="bookmark"
+                           title="Permalink to 2017-9-7 机器学习分类">2017-9-7 机器学习分类</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-07T08:19:51+08:00">
+                Published: Thu 07 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/ji-qi-xue-xi.html">机器学习]</a> </p>
+</footer><!-- /.post-info -->                <h4>机器学习：</h4>
+<!--more-->
+
+<blockquote>
+<ul>
+<li>线性回归</li>
+<li>岭回归</li>
+<li>LASSO</li>
+<li>弹性网络</li>
+<li>逻辑回归</li>
+<li>Softmax 回归</li>
+<li>决策树</li>
+<li>ID3</li>
+<li>C4.5</li>
+<li>CART</li>
+<li>神经网络</li>
+<li>普通网络</li>
+<li>CNN</li>
+<li>RNN</li>
+<li>GAN</li>
+</ul>
+</blockquote>
+<h4>架构总览：</h4>
+<blockquote>
+<p>数据仓库
+- SparkStreaming
+  * tensorflow
+  * scikit-learn
+模型库
+- django
+  * xgboost
+  * SparkMLLib
+特征库
+- redis
+  * numpy
+  * pandas</p>
+</blockquote>
+                <a class="readmore" href="/2017-9-7-ji-qi-xue-xi-fen-lei.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-7-ji-qi-xue-xi-lu-xian.html" rel="bookmark"
+                           title="Permalink to 2017-9-7 机器学习路线">2017-9-7 机器学习路线</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-07T07:21:28+08:00">
+                Published: Thu 07 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/ji-qi-xue-xi.html">机器学习</a> <a href="/tag/lu-xian.html">路线]</a> </p>
+</footer><!-- /.post-info -->                <h3>准备知识：</h3>
+<blockquote>
+<p>编程语言：Python，C++，Spark（大数据环境下）；
+知识储备：英语、线性代数、概率论、图论、神经科学。</p>
+</blockquote>
+<!--more-->
+
+<h4>第一步 统领大局：</h4>
+<blockquote>
+<p>建立大局观，是入门第一要务； 从宏观了解机器学习的全貌；
+机器学习：根据已有特征，选择模型，训练模型，预测未知数据；
+推荐书籍：
+-《图解机器学习》：通俗易懂，算法图解，入门必备；
+-《集体智慧编程》：代码实现，一个字“敲”；
+-《机器学习（周志华西瓜书）》：系统严谨，数学推导；</p>
+</blockquote>
+<h4>第二步 了解算法：</h4>
+<blockquote>
+<p>看遍所有算法原理，主要书籍：《机器学习（周志华）》；
+<code>coursera</code> 上Andrew NG的机器学习公开课，网易云也开了；
+邹博的《机器学习实战》；
+李沐《一起动手学习深度学习》；
+必学 …</p></blockquote>
+                <a class="readmore" href="/2017-9-7-ji-qi-xue-xi-lu-xian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-5-ji-suan-ti-zhi-lu.html" rel="bookmark"
+                           title="Permalink to 2017-9-5 计算体脂率">2017-9-5 计算体脂率</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-05T17:12:11+08:00">
+                Published: Tue 05 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/life.html">life]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>用来计算一个人的体脂率</p>
+</blockquote>
+<!--more-->
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_BFR</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;计算BMI及体脂率</span>
+<span class="sd">    :param weight: 体重（kg）</span>
+<span class="sd">    :param height: 身高（m）</span>
+<span class="sd">    :param age: 年龄（岁）</span>
+<span class="sd">    :param gender: 性别（男--1，女--0）</span>
+<span class="sd">    :returns: 体脂率，float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># BMI</span>
+    <span class="n">BMI</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">/</span><span class="p">(</span><span class="n">height</span><span class="o">*</span><span class="n">height</span><span class="p">)</span>
+    <span class="c1"># 体脂率 </span>
+    <span class="n">BFR</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">BMI</span> <span class="o">+</span> <span class="mf">0.23</span><span class="o">*</span><span class="n">age</span> <span class="o">-</span> <span class="mf">5.4</span> <span class="o">-</span> <span class="mf">10.8</span><span class="o">*</span><span class="n">gender</span>
+    <span class="k">return</span> <span class="n">BFR</span>
+
+<span class="n">get_BFR …</span></pre></div>
+                <a class="readmore" href="/2017-9-5-ji-suan-ti-zhi-lu.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-9-5-python-list-pai-xu-sort-sorted.html" rel="bookmark"
+                           title="Permalink to 2017-9-5 python list 排序 sort、sorted">2017-9-5 python  list 排序 sort、sorted</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-05T15:17:50+08:00">
+                Published: Tue 05 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/list.html">list</a> <a href="/tag/sort.html">sort]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>项目中，有一个list，list内部组成元素为dict，现需要根据dict中某个键的值来进行排序。</p>
+</blockquote>
+<!-- more -->
+
+<h3>代码实现：</h3>
+<blockquote>
+<p><code>reverse</code>: False--默认，正序；True--逆序，由大到小；
+ <code>key</code>: 可以根据<code>key</code>值自定义排序；
+ <code>sort</code>与<code>sorted</code>区别: <code>sort</code>list自身发生改变；<code>sorted</code>list本身不发生改变。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>        
+
+ <span class="c1"># sorted 用法</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>                  <span class="c1">#将a从小到大排序,不影响a本身结构 </span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>   <span class="c1">#将a从大到小排序,不影响a本身结构 </span>
+<span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2 …</span></pre></div>
+                <a class="readmore" href="/2017-9-5-python-list-pai-xu-sort-sorted.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/2017-8-31-zi-dong-sheng-cheng-zhu-shi-wen-dang-docstring.html" rel="bookmark"
+                           title="Permalink to 2017-8-31 自动 生成注释文档（docstring）">2017-8-31 自动 生成注释文档（docstring）</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-08-31T20:22:52+08:00">
+                Published: Thu 31 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/chihwei-hsu.html">Chihwei-Hsu</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">[Python</a> <a href="/tag/linux.html">Linux</a> <a href="/tag/docstring.html">Docstring]</a> </p>
+</footer><!-- /.post-info -->                <h3>情景描述：</h3>
+<blockquote>
+<p>项目中，发现很多函数、类没有注释说明，一个个弄比较繁琐，所以……</p>
+</blockquote>
+<!--more-->
+
+<h3><code>docstring</code>定义：</h3>
+<blockquote>
+<p>官方：A docstring is a string literal that occurs as the first statement in a module, function, class, or method definition. Such a docstring becomes the <strong>doc</strong> special attribute of that object；
+人话：“出现在模块、函数、类、方法里的第一个语句，就叫做<code>docsting</code>”；
+调用：使用<code>__doc__ …</code></p></blockquote>
+                <a class="readmore" href="/2017-8-31-zi-dong-sheng-cheng-zhu-shi-wen-dang-docstring.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 4
+        <a href="/author/chihwei-hsu2.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
