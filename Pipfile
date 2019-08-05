@@ -6,6 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+ipython = "*"
+markdown = "*"
+nbconvert = "*"
+beautifulsoup4 = "*"
+ghp-import = "*"
+matplotlib = "*"
+jupyter = "*"
 
 [requires]
 python_version = "3.7"
