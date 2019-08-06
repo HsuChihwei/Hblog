@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Chihwei-Hsu" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content=", linux, " />
+
+<meta property="og:title" content="ssh "/>
+<meta property="og:url" content="/ssh.html" />
+<meta property="og:description" content="snippets gen ssh ssh-keygen -t rsa -b 4096 -C &#34;zhiwei.xu@mac&#34; cd /Users/chihwei-hsu/.ssh/ # 进入key生成位置 vim id_rsa # 私钥 vim id_rsa.pub # 公钥 vim authorized_keys # 公钥加入，免密登录" />
+<meta property="og:site_name" content="Hsu&#39;s Home" />
+<meta property="og:article:author" content="Chihwei-Hsu" />
+<meta property="og:article:published_time" content="2019-08-06T14:20:17+08:00" />
+<meta name="twitter:title" content="ssh ">
+<meta name="twitter:description" content="snippets gen ssh ssh-keygen -t rsa -b 4096 -C &#34;zhiwei.xu@mac&#34; cd /Users/chihwei-hsu/.ssh/ # 进入key生成位置 vim id_rsa # 私钥 vim id_rsa.pub # 公钥 vim authorized_keys # 公钥加入，免密登录">
+
+        <title>ssh  · Hsu&#39;s Home
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/admonition.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/custom.css" media="screen">
+
+
+
+    </head>
+    <body>
+        <div id="content">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/"><span class=site-name>Hsu's Home</span></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right top-menu">
+                                <li >
+                                    <a href=
+                                       "/"
+                                    >Home</a>
+                                </li>
+                                <li ><a href="/categories">Categories</a></li>
+                                <li ><a href="/tags">Tags</a></li>
+                                <li ><a href="/archives">Archives</a></li>
+                                <li><form class="navbar-search" action="/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span1"></div>
+                    <div class="span10">
+<article itemscope>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+        <h1>
+            <a href="/ssh.html">
+                ssh
+            </a>
+        </h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+            
+            <!--
+ * @Author: zhiwei.xu
+ * @Date: 2019-08-06 14:09:42
+ * @LastEditors: zhiwei.xu
+ * @LastEditTime: 2019-08-06 14:20:15
+ -->
+
+<h1>snippets</h1>
+<h2>gen ssh</h2>
+<div class="highlight"><pre><span></span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;zhiwei.xu@mac&quot;</span>
+<span class="nb">cd</span> /Users/chihwei-hsu/.ssh/  <span class="c1"># 进入key生成位置</span>
+vim id_rsa  <span class="c1"># 私钥</span>
+vim id_rsa.pub  <span class="c1"># 公钥</span>
+vim authorized_keys  <span class="c1"># 公钥加入，免密登录  </span>
+</pre></div>
+
+
+            
+            
+            
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time itemprop="dateCreated" datetime="2019-08-06T14:20:17+08:00">Aug 6, 2019</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#linux-ref">linux</a>
+<h4>Contact</h4>
+    <a href="#" title="My You can add links in your config file Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-you can add links in your config file sidebar-social-links"></i></a>
+    <a href="#" title="My Another social link Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-another social link sidebar-social-links"></i></a>
+            
+
+
+
+
+
+            
+
+
+
+
+
+        </div>
+        </section>
+</div>
+</article>
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+        </div>
+<footer>
+
+
+
+
+    <div id="fpowered">
+        Powered by: <a href="http://getpelican.com/" title="Pelican Home Page" target="_blank" rel="nofollow">Pelican</a>
+        Theme: <a href="https://elegant.oncrashreboot.com/" title="Theme Elegant Home Page" target="_blank" rel="nofollow">Elegant</a>
+    </div>
+</footer>            <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    
+    <script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementById('comment-accordion-toggle');
+    var old_innerHTML = link.innerHTML;
+    $(link).fadeOut(200, function() {
+        $(this).text('Click here to hide comments').fadeIn(200);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link).fadeOut(200, function() {
+            $(this).text(old_innerHTML).fadeIn(200);
+        });
+    })
+})
+</script>
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+        License : MIT -->
+</html>
