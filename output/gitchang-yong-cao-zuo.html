@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Chihwei-Hsu" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content=", git, " />
+
+<meta property="og:title" content="git常用操作 "/>
+<meta property="og:url" content="/gitchang-yong-cao-zuo.html" />
+<meta property="og:description" content="git base git submodule 语法一览 git submodule [--quiet] [--cached] git submodule [--quiet] add [&lt;options&gt;] [--] &lt;repository&gt; [&lt;path&gt;] git submodule [--quiet] status [--cached] [--recursive] [--] [&lt;path&gt;…​] git submodule [--quiet] init [--] [&lt;path&gt;…​] git submodule [--quiet] deinit [-f|--force] (--all|[--] &lt;path&gt;…​) git submodule [--quiet] update [&lt;options&gt;] [--] [&lt;path&gt;…​] git submodule [--quiet] set-branch [&lt;options&gt;] [--] &lt;path&gt; git submodule …" />
+<meta property="og:site_name" content="Hsu&#39;s Home" />
+<meta property="og:article:author" content="Chihwei-Hsu" />
+<meta property="og:article:published_time" content="2019-08-06T15:18:41+08:00" />
+<meta name="twitter:title" content="git常用操作 ">
+<meta name="twitter:description" content="git base git submodule 语法一览 git submodule [--quiet] [--cached] git submodule [--quiet] add [&lt;options&gt;] [--] &lt;repository&gt; [&lt;path&gt;] git submodule [--quiet] status [--cached] [--recursive] [--] [&lt;path&gt;…​] git submodule [--quiet] init [--] [&lt;path&gt;…​] git submodule [--quiet] deinit [-f|--force] (--all|[--] &lt;path&gt;…​) git submodule [--quiet] update [&lt;options&gt;] [--] [&lt;path&gt;…​] git submodule [--quiet] set-branch [&lt;options&gt;] [--] &lt;path&gt; git submodule …">
+
+        <title>git常用操作  · Hsu&#39;s Home
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/admonition.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/custom.css" media="screen">
+
+
+
+    </head>
+    <body>
+        <div id="content">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/"><span class=site-name>Hsu's Home</span></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right top-menu">
+                                <li >
+                                    <a href=
+                                       "/"
+                                    >Home</a>
+                                </li>
+                                <li ><a href="/categories">Categories</a></li>
+                                <li ><a href="/tags">Tags</a></li>
+                                <li ><a href="/archives">Archives</a></li>
+                                <li><form class="navbar-search" action="/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span1"></div>
+                    <div class="span10">
+<article itemscope>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+        <h1>
+            <a href="/gitchang-yong-cao-zuo.html">
+                git常用操作
+            </a>
+        </h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+            
+            <!--
+ * @Author: zhiwei.xu
+ * @Date: 2019-08-06 14:34:26
+ * @LastEditors: zhiwei.xu
+ * @LastEditTime: 2019-08-06 15:18:41
+ -->
+
+<h1>git base</h1>
+<h1>git submodule</h1>
+<h2>语法一览</h2>
+<div class="highlight"><pre><span></span>git submodule <span class="o">[</span>--quiet<span class="o">]</span> <span class="o">[</span>--cached<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> add <span class="o">[</span>&lt;options&gt;<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> &lt;repository&gt; <span class="o">[</span>&lt;path&gt;<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> status <span class="o">[</span>--cached<span class="o">]</span> <span class="o">[</span>--recursive<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> init <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> deinit <span class="o">[</span>-f<span class="p">|</span>--force<span class="o">]</span> <span class="o">(</span>--all<span class="p">|</span><span class="o">[</span>--<span class="o">]</span> &lt;path&gt;…​<span class="o">)</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> update <span class="o">[</span>&lt;options&gt;<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> set-branch <span class="o">[</span>&lt;options&gt;<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> &lt;path&gt;
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> summary <span class="o">[</span>&lt;options&gt;<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> foreach <span class="o">[</span>--recursive<span class="o">]</span> &lt;command&gt;
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> sync <span class="o">[</span>--recursive<span class="o">]</span> <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+git submodule <span class="o">[</span>--quiet<span class="o">]</span> absorbgitdirs <span class="o">[</span>--<span class="o">]</span> <span class="o">[</span>&lt;path&gt;…​<span class="o">]</span>
+</pre></div>
+
+
+<h2>初始化子模块</h2>
+<div class="highlight"><pre><span></span>git submodule init
+</pre></div>
+
+
+<h2>克隆带子模块的仓库</h2>
+<div class="highlight"><pre><span></span>git clone project.git project2
+<span class="nb">cd</span> project2
+git submodule init
+git submodule update
+
+git clone path.to.project.git project --recursive  <span class="c1"># 递归拉取仓库v</span>
+</pre></div>
+
+
+<ul>
+<li>单个克隆子项目，默认不拉取子模块，需要先<code>init</code>初始化，再<code>update</code>更新子模块</li>
+</ul>
+<h2>创建带子模块的仓库</h2>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> project
+git submodule add path.to.submodule.git submodule
+
+<span class="c1"># 以子模块形式给博客新增主题</span>
+git submodule add --force https://github.com/Pelican-Elegant/elegant.git themes/elegant
+</pre></div>
+
+
+<ul>
+<li>新增<code>.gitmodules</code>文件，里面记载仓库地址与项目路径的映射</li>
+<li>修改<code>.git/config</code>文件，里面会登记子项目的仓库地址及状态</li>
+</ul>
+<h2>更新带子模块的仓库</h2>
+<div class="highlight"><pre><span></span>git submodule update  <span class="c1"># 单个更新</span>
+git submodule foreach git pull  <span class="c1"># 批量更新</span>
+</pre></div>
+
+
+<h2>删除子模块</h2>
+<div class="highlight"><pre><span></span>git rm --cached submodule_name  <span class="c1"># 从git中删除子模块</span>
+rm -rf submodule_name/  <span class="c1"># 删除子模块目录及源码</span>
+vim .gitmodules  <span class="c1"># 删除文件中子模块相关代码</span>
+vim .git/config  <span class="c1"># 删除文件中子模块相关代码</span>
+rm .git/module/submodule_name  <span class="c1"># 删除目录下子模块对应目录</span>
+</pre></div>
+
+
+<h2>查看子模块状态</h2>
+<div class="highlight"><pre><span></span>git submodule status
+</pre></div>
+
+
+            
+            
+            
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time itemprop="dateCreated" datetime="2019-08-06T15:18:41+08:00">Aug 6, 2019</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#git-ref">git</a>
+<h4>Contact</h4>
+    <a href="#" title="My You can add links in your config file Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-you can add links in your config file sidebar-social-links"></i></a>
+    <a href="#" title="My Another social link Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-another social link sidebar-social-links"></i></a>
+            
+
+
+
+
+
+            
+
+
+
+
+
+        </div>
+        </section>
+</div>
+</article>
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+        </div>
+<footer>
+
+
+
+
+    <div id="fpowered">
+        Powered by: <a href="http://getpelican.com/" title="Pelican Home Page" target="_blank" rel="nofollow">Pelican</a>
+        Theme: <a href="https://elegant.oncrashreboot.com/" title="Theme Elegant Home Page" target="_blank" rel="nofollow">Elegant</a>
+    </div>
+</footer>            <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    
+    <script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementById('comment-accordion-toggle');
+    var old_innerHTML = link.innerHTML;
+    $(link).fadeOut(200, function() {
+        $(this).text('Click here to hide comments').fadeIn(200);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link).fadeOut(200, function() {
+            $(this).text(old_innerHTML).fadeIn(200);
+        });
+    })
+})
+</script>
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+        License : MIT -->
+</html>
