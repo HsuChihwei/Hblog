@@ -4,7 +4,7 @@
  Author: zhiwei.xu
  Date: 2019-08-04 18:05:12
  LastEditors: zhiwei.xu
- LastEditTime: 2019-08-05 17:12:51
+ LastEditTime: 2019-08-06 11:38:49
 '''
 
 from __future__ import unicode_literals
@@ -13,13 +13,14 @@ AUTHOR = 'Chihwei-Hsu'
 SITENAME = "Hsu's Home"
 SITEURL = ''
 
-PATH = 'content'
-
 TIMEZONE = 'Asia/Shanghai'
 
 DEFAULT_LANG = 'zh_cn'
 
 THEME = "elegant"
+
+PATH = 'content'
+
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
@@ -51,3 +52,6 @@ MARKUP = ('md', 'ipynb')
 
 PLUGIN_PATHS = ['./plugins']
 PLUGINS = ['ipynb.markup']
+
+FILENAME_METADATA = '(?P<title>.*)'
+DEFAULT_DATE = 'fs'

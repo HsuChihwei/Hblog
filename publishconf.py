@@ -1,5 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*- #
+# !/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+ Author: zhiwei.xu
+ Date: 2019-04-28 16:51:55
+ LastEditors: zhiwei.xu
+ LastEditTime: 2019-08-06 09:52:01
+'''
+
 from __future__ import unicode_literals
 
 # This file is only used if you use `make publish` or
@@ -21,5 +28,5 @@ DELETE_OUTPUT_DIRECTORY = True
 
 # Following items are often useful when publishing
 
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+# DISQUS_SITENAME = ""
+# GOOGLE_ANALYTICS = ""
