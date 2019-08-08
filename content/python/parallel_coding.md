@@ -1,9 +1,9 @@
-<!--
- * @Author: zhiwei.xu
- * @Date: 2019-08-05 10:22:48
- * @LastEditors: zhiwei.xu
- * @LastEditTime: 2019-08-06 11:46:38
- -->
+
+Category: python
+Tags: code,threading
+Author: zhiwei.xu
+Date: 2019-08-06 11:47:34
+Modified: 2019-08-06 16:22:02
 
 # threadPool
 

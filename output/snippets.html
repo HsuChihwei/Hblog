@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Chihwei-Hsu" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content=", python, " />
+
+<meta property="og:title" content="snippets "/>
+<meta property="og:url" content="/snippets.html" />
+<meta property="og:description" content="Title: 字符串处理之数值转大写（Python实现） Category: python Tags: code,str Author: zhiwei.xu Date: 2019-08-08 17:59:42 Modified: 2019-08-08 18:03:06 数字转大写 import itertools def num2chinese(num, big=False, simp=True, o=False, twoalt=False): &#34;&#34;&#34; Converts numbers to Chinese representations. `big` : use financial characters. `simp` : use simplified characters instead of …" />
+<meta property="og:site_name" content="Hsu&#39;s Home" />
+<meta property="og:article:author" content="Chihwei-Hsu" />
+<meta property="og:article:published_time" content="2019-08-08T18:03:06+08:00" />
+<meta name="twitter:title" content="snippets ">
+<meta name="twitter:description" content="Title: 字符串处理之数值转大写（Python实现） Category: python Tags: code,str Author: zhiwei.xu Date: 2019-08-08 17:59:42 Modified: 2019-08-08 18:03:06 数字转大写 import itertools def num2chinese(num, big=False, simp=True, o=False, twoalt=False): &#34;&#34;&#34; Converts numbers to Chinese representations. `big` : use financial characters. `simp` : use simplified characters instead of …">
+
+        <title>snippets  · Hsu&#39;s Home
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/admonition.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/theme/css/custom.css" media="screen">
+
+
+
+    </head>
+    <body>
+        <div id="content">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/"><span class=site-name>Hsu's Home</span></a>
+                        <div class="nav-collapse collapse">
+                            <ul class="nav pull-right top-menu">
+                                <li >
+                                    <a href=
+                                       "/"
+                                    >Home</a>
+                                </li>
+                                <li ><a href="/categories">Categories</a></li>
+                                <li ><a href="/tags">Tags</a></li>
+                                <li ><a href="/archives">Archives</a></li>
+                                <li><form class="navbar-search" action="/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span1"></div>
+                    <div class="span10">
+<article itemscope>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+        <h1>
+            <a href="/snippets.html">
+                snippets
+            </a>
+        </h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+            
+            <p>Title: 字符串处理之数值转大写（Python实现）
+Category: python
+Tags: code,str
+Author: zhiwei.xu
+Date: 2019-08-08 17:59:42
+Modified: 2019-08-08 18:03:06</p>
+<h1>数字转大写</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="k">def</span> <span class="nf">num2chinese</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">big</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">simp</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">twoalt</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts numbers to Chinese representations.</span>
+<span class="sd">    `big`   : use financial characters.</span>
+<span class="sd">    `simp`  : use simplified characters instead of traditional characters.</span>
+<span class="sd">    `o`     : use 〇 for zero.</span>
+<span class="sd">    `twoalt`: use 两/兩 for two when appropriate.</span>
+<span class="sd">    Note that `o` and `twoalt` is ignored when `big` is used, </span>
+<span class="sd">    and `twoalt` is ignored when `o` is used for formal representations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check num first</span>
+    <span class="n">nd</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">nd</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">1e48</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;number out of range&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s1">&#39;e&#39;</span> <span class="ow">in</span> <span class="n">nd</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;scientific notation is not supported&#39;</span><span class="p">)</span>
+    <span class="n">c_symbol</span> <span class="o">=</span> <span class="s1">&#39;正负点&#39;</span> <span class="k">if</span> <span class="n">simp</span> <span class="k">else</span> <span class="s1">&#39;正負點&#39;</span>
+    <span class="k">if</span> <span class="n">o</span><span class="p">:</span>  <span class="c1"># formal</span>
+        <span class="n">twoalt</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="n">big</span><span class="p">:</span>
+        <span class="n">c_basic</span> <span class="o">=</span> <span class="s1">&#39;零壹贰叁肆伍陆柒捌玖&#39;</span> <span class="k">if</span> <span class="n">simp</span> <span class="k">else</span> <span class="s1">&#39;零壹貳參肆伍陸柒捌玖&#39;</span>
+        <span class="n">c_unit1</span> <span class="o">=</span> <span class="s1">&#39;拾佰仟&#39;</span>
+        <span class="n">c_twoalt</span> <span class="o">=</span> <span class="s1">&#39;贰&#39;</span> <span class="k">if</span> <span class="n">simp</span> <span class="k">else</span> <span class="s1">&#39;貳&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">c_basic</span> <span class="o">=</span> <span class="s1">&#39;〇一二三四五六七八九&#39;</span> <span class="k">if</span> <span class="n">o</span> <span class="k">else</span> <span class="s1">&#39;零一二三四五六七八九&#39;</span>
+        <span class="n">c_unit1</span> <span class="o">=</span> <span class="s1">&#39;十百千&#39;</span>
+        <span class="k">if</span> <span class="n">twoalt</span><span class="p">:</span>
+            <span class="n">c_twoalt</span> <span class="o">=</span> <span class="s1">&#39;两&#39;</span> <span class="k">if</span> <span class="n">simp</span> <span class="k">else</span> <span class="s1">&#39;兩&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">c_twoalt</span> <span class="o">=</span> <span class="s1">&#39;二&#39;</span>
+    <span class="n">c_unit2</span> <span class="o">=</span> <span class="s1">&#39;万亿兆京垓秭穰沟涧正载&#39;</span> <span class="k">if</span> <span class="n">simp</span> <span class="k">else</span> <span class="s1">&#39;萬億兆京垓秭穰溝澗正載&#39;</span>
+    <span class="n">revuniq</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
+    <span class="n">nd</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">nd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_symbol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">nd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_symbol</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="n">nd</span><span class="p">:</span>
+        <span class="n">integer</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;+-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">integer</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;+-&#39;</span><span class="p">),</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">integer</span><span class="p">):</span>
+        <span class="n">splitted</span> <span class="o">=</span> <span class="p">[</span><span class="n">integer</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">integer</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">)]</span>
+        <span class="n">intresult</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">nu</span><span class="p">,</span> <span class="n">unit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splitted</span><span class="p">):</span>
+            <span class="c1"># special cases</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 0000</span>
+                <span class="n">intresult</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">nu</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># 0002</span>
+                <span class="n">intresult</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_twoalt</span> <span class="o">+</span> <span class="n">c_unit2</span><span class="p">[</span><span class="n">nu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="k">continue</span>
+            <span class="n">ulist</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">nc</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">unit</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ulist</span><span class="p">:</span>  <span class="c1"># ???0</span>
+                        <span class="n">ulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">nc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ch</span><span class="p">)])</span>
+                <span class="k">elif</span> <span class="n">nc</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span> <span class="ow">and</span> <span class="n">unit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                    <span class="c1"># special case for tens</span>
+                    <span class="c1"># edit the &#39;elif&#39; if you don&#39;t like</span>
+                    <span class="c1"># 十四, 三千零十四, 三千三百一十四</span>
+                    <span class="n">ulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_unit1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">nc</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">ch</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+                    <span class="n">ulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_twoalt</span> <span class="o">+</span> <span class="n">c_unit1</span><span class="p">[</span><span class="n">nc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ch</span><span class="p">)]</span> <span class="o">+</span> <span class="n">c_unit1</span><span class="p">[</span><span class="n">nc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">ustr</span> <span class="o">=</span> <span class="n">revuniq</span><span class="p">(</span><span class="n">ulist</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nu</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">intresult</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ustr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">intresult</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ustr</span> <span class="o">+</span> <span class="n">c_unit2</span><span class="p">[</span><span class="n">nu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">revuniq</span><span class="p">(</span><span class="n">intresult</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">remainder</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_symbol</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c_basic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ch</span><span class="p">)]</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">remainder</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+
+            
+            
+            
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time itemprop="dateCreated" datetime="2019-08-08T18:03:06+08:00">Aug 8, 2019</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#python-ref">python</a>
+<h4>Contact</h4>
+    <a href="#" title="My You can add links in your config file Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-you can add links in your config file sidebar-social-links"></i></a>
+    <a href="#" title="My Another social link Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-another social link sidebar-social-links"></i></a>
+            
+
+
+
+
+
+            
+
+
+
+
+
+        </div>
+        </section>
+</div>
+</article>
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+        </div>
+<footer>
+
+
+
+
+    <div id="fpowered">
+        Powered by: <a href="http://getpelican.com/" title="Pelican Home Page" target="_blank" rel="nofollow">Pelican</a>
+        Theme: <a href="https://elegant.oncrashreboot.com/" title="Theme Elegant Home Page" target="_blank" rel="nofollow">Elegant</a>
+    </div>
+</footer>            <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    
+    <script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementById('comment-accordion-toggle');
+    var old_innerHTML = link.innerHTML;
+    $(link).fadeOut(200, function() {
+        $(this).text('Click here to hide comments').fadeIn(200);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link).fadeOut(200, function() {
+            $(this).text(old_innerHTML).fadeIn(200);
+        });
+    })
+})
+</script>
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+        License : MIT -->
+</html>

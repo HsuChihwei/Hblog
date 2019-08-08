@@ -1,9 +1,9 @@
-<!--
- * @Author: zhiwei.xu
- * @Date: 2019-08-06 14:09:42
- * @LastEditors: zhiwei.xu
- * @LastEditTime: 2019-08-06 14:20:15
- -->
+
+Category: linux
+Tags: code,ssh
+Author: zhiwei.xu
+Date: 2019-08-06 14:09:42
+Modified: 2019-08-06 16:21:58
 
 # snippets
 
